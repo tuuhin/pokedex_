@@ -1,4 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../domain/models/pokemon_news_models.dart';
 part 'pokenews_dto.g.dart';
 
 @JsonSerializable()
@@ -20,6 +22,15 @@ class PokeNewsDto {
     required this.date,
     this.tags,
   });
+
+  PokemonNewsModel toModel() => PokemonNewsModel(
+      id: id,
+      title: title,
+      shortDescription: shortDescription,
+      url: url,
+      image: image,
+      date: date,
+      tags: tags);
 
   factory PokeNewsDto.fromJson(Map<String, dynamic> json) =>
       _$PokeNewsDtoFromJson(json);

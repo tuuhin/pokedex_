@@ -10,7 +10,7 @@ part 'poke_news_api_client.g.dart';
 abstract class PokeNewsApiClient {
   factory PokeNewsApiClient(Dio dio, {String baseUrl}) = _PokeNewsApiClient;
   @GET("/news")
-  Future<List<PokeNewsDto>> getTasks({
+  Future<List<PokeNewsDto>> getNews({
     @Query("index") int? index,
     @Query("count") int? count = 10,
   });

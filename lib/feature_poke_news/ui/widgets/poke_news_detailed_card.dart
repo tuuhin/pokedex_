@@ -1,20 +1,38 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/feature_poke_news/data/dto/pokenews_dto.dart';
-import 'package:flutter_pokedex/main.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class PokeNewsDetailedCard extends StatelessWidget {
+import '../../../core/singletons/tags_remover.dart';
+import '../../data/dto/pokenews_dto.dart';
+import '../../../main.dart';
+
+class PokeNewsDetailedCard extends StatefulWidget {
   final PokeNewsDto news;
-  const PokeNewsDetailedCard({super.key, required this.news});
+  const PokeNewsDetailedCard({Key? key, required this.news}) : super(key: key);
 
+  @override
+  State<PokeNewsDetailedCard> createState() => _PokeNewsDetailedCardState();
+}
+
+class _PokeNewsDetailedCardState extends State<PokeNewsDetailedCard> {
   void launchWebView() async {
     try {
-      if (await canLaunchUrl(
-          Uri.parse('https://api.pokemon.com/us/api${news.url!}'))) {
-        launchUrl(Uri.parse('https://api.pokemon.com${news.url!}'),
-            mode: LaunchMode.inAppWebView);
+      Uri url = Uri.parse('https://api.pokemon.com/us/api${widget.news.url!}');
+      if (await canLaunchUrl(url)) {
+        launchUrl(url, mode: LaunchMode.inAppWebView);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Can\'t open this url ')));
       }
+    } on PlatformException {
+      showDialog(
+        context: context,
+        builder: (context) => const AlertDialog(
+          title: Text('Failed'),
+          content: Text('Platform dosen\'t supports opening url'),
+        ),
+      );
     } catch (e) {
       logger.severe(e.toString());
     }
@@ -29,30 +47,29 @@ class PokeNewsDetailedCard extends StatelessWidget {
         onTap: launchWebView,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: SizedBox(
-                width: double.infinity,
-                height: size.height * .2,
-                child: CachedNetworkImage(
-                  imageUrl: news.image!,
-                  fit: BoxFit.cover,
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: size.height * .2,
+                    child: CachedNetworkImage(
+                        imageUrl: widget.news.image!, fit: BoxFit.cover),
+                  ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              news.title.replaceAll(RegExp(r'<.*?>'), ''),
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            if (news.shortDescription != null) ...[
-              const SizedBox(height: 8),
-              Text(
-                news.shortDescription!.replaceAll(RegExp(r'<.*?>'), ''),
-              )
-            ]
-          ]
+                const SizedBox(height: 8),
+                Text(tagRemover(widget.news.title),
+                    style: Theme.of(context).textTheme.headline6),
+                if (widget.news.shortDescription != null) ...[
+                  const SizedBox(height: 4),
+                  Text(tagRemover(widget.news.shortDescription!))
+                ],
+                const Divider(),
+                Text(widget.news.date),
+              ]
               // CachedNetworkImage(imageUrl: news.image!)],
               ),
         ),
