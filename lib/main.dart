@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart' as flutter_acrylic;
 import 'package:flutter_pokedex/app.dart';
+import 'package:flutter_pokedex/core/context/providers.dart';
 import 'package:flutter_pokedex/core/theme/theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
@@ -27,12 +28,10 @@ void main() async {
         effect: flutter_acrylic.WindowEffect.acrylic);
     await WindowManager.instance.ensureInitialized();
     windowManager.waitUntilReadyToShow().then((_) async {
-      await windowManager.setTitleBarStyle(
-        TitleBarStyle.normal,
-        windowButtonVisibility: false,
-      );
-      await windowManager.setSize(const Size(755, 545));
-      await windowManager.setMinimumSize(const Size(755, 545));
+      await windowManager.setTitleBarStyle(TitleBarStyle.normal,
+          windowButtonVisibility: false);
+      await windowManager.setSize(const Size(400, 600));
+      await windowManager.setMinimumSize(const Size(400, 600));
       await windowManager.center();
       await windowManager.show();
       await windowManager.setPreventClose(false);
@@ -46,18 +45,16 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      // themeMode: ThemeMode.dark,
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      home: const SafeArea(child: App()),
-    );
-  }
+  Widget build(BuildContext context, WidgetRef ref) => MaterialApp(
+        title: 'Flutter Pokdex App',
+        debugShowCheckedModeBanner: false,
+        themeMode: ref.watch(themeProvider),
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        home: const App(),
+      );
 }

@@ -7,4 +7,4 @@ final preferncesProvider = FutureProvider<SharedPreferences>(
     (ref) async => await SharedPreferences.getInstance());
 
 final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>(
-    (ref) => ThemeNotifier(ref.read(preferncesProvider).value)..getTheme());
+    (ref) => ThemeNotifier(ref.read(preferncesProvider).value)..init());
