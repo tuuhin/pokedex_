@@ -10,4 +10,5 @@ class Paginator<T> with _$Paginator<T> {
   factory Paginator.error(Object err, StackTrace stk) = ErrorDetails;
   factory Paginator.errorLoadMore(T date, Object err, StackTrace stk) =
       ErrorDetailsMore;
+  factory Paginator.end(String message) = PaginatorEnd;
 }
