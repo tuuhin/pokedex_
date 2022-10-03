@@ -6,12 +6,12 @@ import './dto/pokemon_moves_dto.dart';
 
 part 'pokemon_moves_client.g.dart';
 
-@RestApi(baseUrl: 'https://pokeapi.co/api/v2')
+@RestApi(baseUrl: 'https://pokeapi.co/api/v2/')
 abstract class PokemonMovesClient {
   factory PokemonMovesClient(Dio dio, {String baseUrl}) = _PokemonMovesClient;
 
-  @GET("move/{move_id}")
-  Future<PokemonMovesDto> getMovesDetails({
+  @GET("/move/{move_id}")
+  Future<PokemonMovesDetailedDto> getMovesDetails({
     @Path("move_id") required int id,
   });
 

@@ -1,33 +1,44 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_pokedex/core/paginator/paginator.dart';
-import 'package:flutter_pokedex/core/util/string_helper.dart';
-import 'package:flutter_pokedex/feature_poke_moves/data/repository/pokemon_moves_repositoy_impl.dart';
-import 'package:flutter_pokedex/feature_poke_moves/domain/models/pokemon_move_detail_model.dart';
-import 'package:flutter_pokedex/feature_poke_moves/domain/models/pokemon_move_simplified_model.dart';
-import 'package:flutter_pokedex/feature_poke_moves/domain/repository/pokemon_move_repository.dart';
+import 'package:flutter_pokedex/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../data/remote/dto/pokemon_move_dto.dart';
-import '../data/remote/dto/pokemon_moves_dto.dart';
+import '../domain/domain.dart';
 
 class PokemonMovesPaginatedNotifier
-    extends StateNotifier<Paginator<PokemonMoveDetailed>> {
-  PokemonMovesPaginatedNotifier(this._respositoryImpl)
-      : super(Paginator.loading());
-  final PokemonMovesRespositoryImpl _respositoryImpl;
+    extends StateNotifier<Paginator<List<PokemonMoveDetailed>>> {
+  PokemonMovesPaginatedNotifier(this._impl) : super(Paginator.loading());
+  final PokemonMoveRespository _impl;
 
   final List<PokemonMoveDetailed> _moves = [];
-  int offset = 0;
+  int get moveCount => _moves.length;
+  String? _nextURL;
+  int _offset = 0;
 
-  void fetchPokeMoves() async {
+  void fetchSomeMoves() async {
+    logger.fine("fetching ");
     try {
-      PokemonMoveDto moveinfo = _moves.isNotEmpty
-          ? await _respositoryImpl.getMoves(offset: offset)
-          : await _respositoryImpl.getMoves();
-      List<PokemonMovesDto> moves = await Future.wait<PokemonMovesDto>(
-          moveinfo.results.map((e) =>
-              _respositoryImpl.getDetailedMove(getIdFromString(e.url) ?? 1)));
+      PokemonMove move = await _impl.getMoves(offset: _offset, limit: 50);
+      _nextURL = move.nextURL;
+      logger.fine("got move object");
+      if (_nextURL != null) {
+        _offset =
+            int.tryParse(Uri.parse(move.nextURL!).queryParameters["offset"]!) ??
+                0;
+      }
+      logger.fine("trying for more");
+      List<PokemonMoveDetailed> movesDetailed =
+          await _impl.getDetailedMove(move.results);
+      logger.fine("got more");
+      state = Paginator.data(_moves..addAll(movesDetailed));
+    } on DioError catch (dio, stk) {
+      logger.shout(dio);
+      Paginator.error(dio, stk);
     } catch (e, stk) {
-      state = Paginator.error(e, stk);
+      logger.shout(e);
+      Paginator.error(e, stk);
     }
   }
+
+  void fetchMoreMoves() async {}
 }
