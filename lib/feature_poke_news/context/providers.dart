@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/paginator/paginator.dart';
-import '../../core/singletons/dio_client.dart';
+
+import '../../core/util/dio_client.dart';
 import '../data/news_data.dart';
 import '../context/pagination_notifier.dart';
 
