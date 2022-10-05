@@ -1,3 +1,4 @@
+import 'package:flutter_pokedex/core/util/string_helper.dart';
 import 'package:flutter_pokedex/feature_poke_moves/domain/models/pokemon_move_detail_model.dart';
 // import 'package:flutter_pokedex/feature_poke_moves/domain/models/pokemon_move_simplified_model.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -40,17 +41,19 @@ class PokemonMovesDetailedDto {
   Map<String, dynamic> toJson() => _$PokemonMovesDetailedDtoToJson(this);
 
   PokemonMoveDetailed toMove() => PokemonMoveDetailed(
-      id: id,
-      name: name,
-      power: power,
-      pp: pp,
-      moveType: learnedByTypeDto.name,
-      learnedByPokemon: learnedByPokemon.map((e) => e.toModel()).toList(),
-      priority: priority,
-      accuracy: accuracy,
-      damageClass: damageClass.toModel(),
-      effectEntries: effectEntries.map((e) => e.toModel()).toList(),
-      flavourText: flavourText.map((e) => e.toModel()).toList());
+        id: id,
+        name: name,
+        power: power,
+        pp: pp,
+        moveType: learnedByTypeDto.name,
+        learnedByPokemon: learnedByPokemon.map((e) => e.toModel()).toList(),
+        priority: priority,
+        accuracy: accuracy,
+        damageClass: damageClass.name,
+        effect: removeSpecialChars(
+            effectEntries.first.shortEffect ?? effectEntries.first.effect),
+        flavourText: removeSpecialChars(flavourText.first.flavourText),
+      );
 }
 
 @JsonSerializable()
@@ -60,8 +63,6 @@ class DamageClassDto {
   factory DamageClassDto.fromJson(Map<String, dynamic> json) =>
       _$DamageClassDtoFromJson(json);
   Map<String, dynamic> toJson() => _$DamageClassDtoToJson(this);
-
-  DamageClass toModel() => DamageClass(name: name);
 }
 
 @JsonSerializable()
@@ -72,8 +73,6 @@ class FlavourTextDto {
   factory FlavourTextDto.fromJson(Map<String, dynamic> json) =>
       _$FlavourTextDtoFromJson(json);
   Map<String, dynamic> toJson() => _$FlavourTextDtoToJson(this);
-
-  FlavourText toModel() => FlavourText(flavourText: flavourText);
 }
 
 @JsonSerializable()
@@ -86,8 +85,6 @@ class EffectEntriesDto {
   factory EffectEntriesDto.fromJson(Map<String, dynamic> json) =>
       _$EffectEntriesDtoFromJson(json);
   Map<String, dynamic> toJson() => _$EffectEntriesDtoToJson(this);
-
-  EffectEntries toModel() => EffectEntries(effect: effect);
 }
 
 @JsonSerializable()
@@ -104,19 +101,17 @@ class LearnedByTypeDto {
 class LearnedByPokemonDto {
   final String name;
   final String url;
-  String? imageURl;
+  String? imageURL;
 
-  LearnedByPokemonDto({required this.name, required this.url});
-
-  // void init() {
-  //   String imageUrl = url.substring(0, url.length - 1);
-  //   imageUrl =
-  //       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${imageUrl.split("/").last}.png';
-  // }
-
+  LearnedByPokemonDto({required this.name, required this.url, this.imageURL}) {
+    int id = getIdFromString(url) ?? 1;
+    imageURL =
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png';
+  }
   factory LearnedByPokemonDto.fromJson(Map<String, dynamic> json) =>
       _$LearnedByPokemonDtoFromJson(json);
   Map<String, dynamic> toJson() => _$LearnedByPokemonDtoToJson(this);
 
-  LearnedByPokemon toModel() => LearnedByPokemon(name: name, url: url);
+  LearnedByPokemon toModel() =>
+      LearnedByPokemon(name: name, url: url, imageURL: imageURL);
 }

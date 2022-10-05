@@ -18,7 +18,7 @@ class PokemonMovesPaginatedNotifier
   void fetchSomeMoves() async {
     logger.fine("fetching ");
     try {
-      PokemonMove move = await _impl.getMoves(offset: _offset, limit: 50);
+      PokemonMove move = await _impl.getMoves(offset: _offset);
       _nextURL = move.nextURL;
       logger.fine("got move object");
       if (_nextURL != null) {

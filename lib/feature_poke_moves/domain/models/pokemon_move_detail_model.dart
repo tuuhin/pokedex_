@@ -8,11 +8,11 @@ class PokemonMoveDetailed {
   final String moveType;
   final List<LearnedByPokemon> learnedByPokemon;
 
-  final DamageClass damageClass;
+  final String damageClass;
 
-  final List<EffectEntries> effectEntries;
+  final String effect;
 
-  final List<FlavourText> flavourText;
+  final String flavourText;
 
   PokemonMoveDetailed({
     required this.moveType,
@@ -24,29 +24,14 @@ class PokemonMoveDetailed {
     required this.priority,
     this.accuracy,
     required this.damageClass,
-    required this.effectEntries,
+    required this.effect,
     required this.flavourText,
   });
-}
-
-class DamageClass {
-  final String name;
-  DamageClass({required this.name});
-}
-
-class FlavourText {
-  final String flavourText;
-  FlavourText({required this.flavourText});
-}
-
-class EffectEntries {
-  final String effect;
-  final String? shortEffect;
-  EffectEntries({required this.effect, this.shortEffect});
 }
 
 class LearnedByPokemon {
   final String name;
   final String url;
-  LearnedByPokemon({required this.name, required this.url});
+  final String? imageURL;
+  LearnedByPokemon({required this.name, required this.url, this.imageURL});
 }
