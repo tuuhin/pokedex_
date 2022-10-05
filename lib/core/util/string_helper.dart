@@ -3,3 +3,10 @@ int? getIdFromString(String url) =>
 
 String removeSpecialChars(String str) =>
     str.replaceAll(RegExp(r"[^a-zA-Z' ]+"), "");
+
+int? getOffsetFromString(String url) =>
+    int.tryParse(Uri.parse(url).queryParameters["offset"]!);
+
+extension TitleCase on String {
+  String toTitleCase() => split(RegExp(r"^[a-zA-Z0-9]*$")).first;
+}
