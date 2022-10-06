@@ -30,29 +30,43 @@ class _PokeNewsDetailedState extends ConsumerState<PokeNewsDetailed> {
 
   @override
   Widget build(BuildContext context) {
-    return ref.watch(pokeNewsProviderPaginated).when(
-        loading: () => const SliverFillRemaining(
+    return SliverPadding(
+      padding: const EdgeInsets.all(8.0),
+      sliver: ref.watch(pokeNewsProviderPaginated).when(
+            loading: () => const SliverFillRemaining(
               child: Center(child: CircularProgressIndicator()),
             ),
-        loadMore: (data) => SliverAnimatedList(
+            loadMore: (data) => SliverAnimatedList(
               key: ref.read(pokeNewsProviderPaginated.notifier).newsStateKey,
               itemBuilder: (context, index, animation) => LoadTransition(
-                  animation: animation,
-                  child: PokeNewsDetailedCard(news: data[index])),
+                animation: animation,
+                child: PokeNewsDetailedCard(news: data[index]),
+              ),
             ),
-        data: (data) => SliverAnimatedList(
+            data: (data) => SliverAnimatedList(
               key: ref.read(pokeNewsProviderPaginated.notifier).newsStateKey,
               itemBuilder: (context, index, animation) => LoadTransition(
-                  animation: animation,
-                  child: PokeNewsDetailedCard(news: data[index])),
+                animation: animation,
+                child: PokeNewsDetailedCard(news: data[index]),
+              ),
             ),
-        error: (err, stk) => const SliverFillRemaining(
+            error: (err, stk) => const SliverFillRemaining(
               child: Icon(Icons.face),
             ),
-        errorLoadMore: (data, err, stk) => SliverList(
-            delegate: SliverChildBuilderDelegate(
-                ((context, index) => PokeNewsDetailedCard(news: data[index])),
-                childCount: data.length)),
-        end: (message) => Text(message));
+            errorLoadMore: (data, err, stk) => SliverAnimatedList(
+              key: ref.read(pokeNewsProviderPaginated.notifier).newsStateKey,
+              itemBuilder: (context, index, animation) => LoadTransition(
+                animation: animation,
+                child: PokeNewsDetailedCard(news: data[index]),
+              ),
+            ),
+            end: (message, data) => SliverAnimatedList(
+              key: ref.read(pokeNewsProviderPaginated.notifier).newsStateKey,
+              itemBuilder: (context, index, animation) => LoadTransition(
+                  animation: animation,
+                  child: PokeNewsDetailedCard(news: data[index])),
+            ),
+          ),
+    );
   }
 }

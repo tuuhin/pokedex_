@@ -15,18 +15,18 @@ class _ShowPokeNewsState extends ConsumerState<ShowPokeNews> {
   late ScrollController _scrollController;
 
   void scrollListener() {
-    double maxScroll = _scrollController.position.maxScrollExtent;
-    double currentScroll = _scrollController.position.pixels;
-    double delta = MediaQuery.of(context).size.height * .4;
-    if (maxScroll - currentScroll <= delta) {
-      ref.read(pokeNewsProviderPaginated.notifier).fetchMorePokeNews();
+    double delta = MediaQuery.of(context).size.height * .2;
+    if (_scrollController.position.maxScrollExtent -
+            _scrollController.position.pixels <=
+        delta) {
+      ref.read(pokeNewsProviderPaginated.notifier).requestNews();
     }
   }
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
+    _scrollController = ScrollController(initialScrollOffset: 10);
     _scrollController.addListener(scrollListener);
   }
 
@@ -40,13 +40,20 @@ class _ShowPokeNewsState extends ConsumerState<ShowPokeNews> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: CustomScrollView(
+      body: Scrollbar(
         controller: _scrollController,
-        slivers: const [
-          SliverAppBar(primary: true, title: Text('Pokemon News')),
-          PokeNewsDetailed(),
-          PokeDetailedNewsLoadMore()
-        ],
+        thumbVisibility: true,
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: const [
+            SliverAppBar(
+              floating: true,
+              title: Text('Pokemon News'),
+            ),
+            PokeNewsDetailed(),
+            PokeDetailedNewsLoadMore()
+          ],
+        ),
       ),
     );
   }

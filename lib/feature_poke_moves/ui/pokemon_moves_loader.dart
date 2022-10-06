@@ -33,7 +33,7 @@ class _PokeMovesLoaderState extends ConsumerState<PokeMovesLoader> {
             error: (err, stk) => SliverToBoxAdapter(child: Text('error')),
             errorLoadMore: (date, err, stk) =>
                 SliverToBoxAdapter(child: Text('loading')),
-            end: (message) =>
+            end: (message, _) =>
                 const SliverToBoxAdapter(child: Text('End of moves'))),
       );
 }

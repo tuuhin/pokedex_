@@ -1,21 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../core/paginator/paginator.dart';
-
-import '../../core/util/dio_client.dart';
-import '../data/news_data.dart';
 import '../context/pagination_notifier.dart';
+import '../data/repository/poknewsrepoimpl.dart';
+import '../domain/domain.dart';
 
-final pokenewsClientProvider =
-    Provider<PokeNewsApiClient>((ref) => PokeNewsApiClient(dio));
+final pokemonNewsRepostiory =
+    Provider<PokemonNewsRepostiory>((ref) => PokeMonNewsRespositoryImpl());
 
-final pokeNewsProvider = FutureProvider<List<PokeNewsDto>>((ref) async {
-  PokeNewsApiClient client = ref.read(pokenewsClientProvider);
-  List<PokeNewsDto> news = await client.getNews(count: 5);
+final pokeNewsProvider = FutureProvider<List<PokemonNewsModel>>((ref) async {
+  PokemonNewsRepostiory client = ref.read(pokemonNewsRepostiory);
+  List<PokemonNewsModel> news = await client.getNews(count: 5);
   return news;
 });
 
 final pokeNewsProviderPaginated = StateNotifierProvider<
-        PaginatedPokemonNewsNotifier, Paginator<List<PokeNewsDto>>>(
+        PaginatedPokemonNewsNotifier, Paginator<List<PokemonNewsModel>>>(
     (ref) =>
-        PaginatedPokemonNewsNotifier(ref.read(pokenewsClientProvider))..init());
+        PaginatedPokemonNewsNotifier(ref.read(pokemonNewsRepostiory))..init());

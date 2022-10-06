@@ -10,10 +10,16 @@ class PokeDetailedNewsLoadMore extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(pokeNewsProviderPaginated).maybeWhen(
           orElse: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
-          loadMore: (data) => const SliverToBoxAdapter(
+          loadMore: (data) => SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
-              child: Center(child: CircularProgressIndicator()),
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: const [
+                  CircularProgressIndicator(),
+                  Text('Loading more...')
+                ],
+              ),
             ),
           ),
           errorLoadMore: (date, err, stk) => SliverToBoxAdapter(
@@ -22,6 +28,7 @@ class PokeDetailedNewsLoadMore extends ConsumerWidget {
               child: Text('$err'),
             ),
           ),
+          end: (message, data) => const Text('We reached end'),
         );
   }
 }

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/main.dart';
-
-import '../../../data/dto/pokenews_dto.dart';
+import '../../../domain/domain.dart';
 import 'poke_news_summary_card.dart';
 
 class PokeNewsSummaryList extends StatelessWidget {
-  final List<PokeNewsDto> data;
+  final List<PokemonNewsModel> data;
   const PokeNewsSummaryList({Key? key, required this.data}) : super(key: key);
 
   @override
