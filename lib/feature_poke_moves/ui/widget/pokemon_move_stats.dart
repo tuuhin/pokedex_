@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../core/pokemon/pokemon_type/pokemon_type.dart';
-import '../domain/models/pokemon_move_detail_model.dart';
+import 'package:flutter_pokedex/core/pokemon/pokemon_type/pokemon_type.dart';
+import 'package:flutter_pokedex/feature_poke_moves/domain/domain.dart';
 
 class PokemonMoveStats extends StatelessWidget {
   final PokemonMoveDetailed details;

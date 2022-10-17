@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../domain/domain.dart';
-import '../../core/pokemon/pokemon_type/pokemon_type.dart';
-import '../../core/util/utlis.dart';
+import '../../../core/pokemon/pokemon_type/pokemon_type.dart';
+import '../../../core/util/string_helper.dart';
+import '../../domain/domain.dart';
 
 class PokeMonMoveCard extends ConsumerWidget {
   final PokemonMoveDetailed details;
@@ -21,10 +21,14 @@ class PokeMonMoveCard extends ConsumerWidget {
         PokeMonType.getPokeMonTypeByName(details.moveType).primaryColor;
     Color secondaryColor =
         PokeMonType.getPokeMonTypeByName(details.moveType).secondaryColor;
-    return Card(
-      color: primaryColor,
-      child: Padding(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Container(
         padding: const EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+            color: primaryColor,
+            border: Border.all(color: secondaryColor, width: 2),
+            borderRadius: BorderRadius.circular(20)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

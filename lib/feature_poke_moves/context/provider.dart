@@ -13,5 +13,5 @@ final pokeMovesProvider = StateNotifierProvider<PokemonMovesPaginatedNotifier,
     Paginator<List<PokemonMoveDetailed>>>(
   (ref) =>
       PokemonMovesPaginatedNotifier(ref.read(pokemonMoveRespositoryProvider))
-        ..fetchSomeMoves(),
+        ..init(),
 );

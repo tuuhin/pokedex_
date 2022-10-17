@@ -20,10 +20,8 @@ class PokemonMovesRespositoryImpl implements PokemonMoveRespository {
 
   @override
   Future<PokemonMove> getMoves({int? offset, int? limit}) async {
-    logger.shout("hitting ");
     PokemonMoveDto pokemonMove =
         await _client.getMove(offset: offset, limit: limit);
-    logger.shout("hit it");
     return pokemonMove.toModel();
   }
 }
