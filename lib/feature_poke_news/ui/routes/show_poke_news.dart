@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../context/providers.dart';
@@ -15,7 +16,7 @@ class _ShowPokeNewsState extends ConsumerState<ShowPokeNews> {
   late ScrollController _scrollController;
 
   void scrollListener() {
-    double delta = MediaQuery.of(context).size.height * .2;
+    double delta = MediaQuery.of(context).size.height * .1;
     if (_scrollController.position.maxScrollExtent -
             _scrollController.position.pixels <=
         delta) {
@@ -26,7 +27,8 @@ class _ShowPokeNewsState extends ConsumerState<ShowPokeNews> {
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController(initialScrollOffset: 10);
+    _scrollController = ScrollController();
+
     _scrollController.addListener(scrollListener);
   }
 

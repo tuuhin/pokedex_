@@ -3,17 +3,18 @@ import '../../core/paginator/paginator.dart';
 import '../context/pagination_notifier.dart';
 import '../data/repository/poknewsrepoimpl.dart';
 import '../domain/domain.dart';
+import './poke_news_provider.dart';
 
 final pokemonNewsRepostiory =
     Provider<PokemonNewsRepostiory>((ref) => PokeMonNewsRespositoryImpl());
 
-final pokeNewsProvider = FutureProvider<List<PokemonNewsModel>>((ref) async {
-  PokemonNewsRepostiory client = ref.read(pokemonNewsRepostiory);
-  List<PokemonNewsModel> news = await client.getNews(count: 5);
-  return news;
-});
+final pokeNewsProvider =
+    StateNotifierProvider<PokeNewsNotifier, AsyncValue<List<PokemonNewsModel>>>(
+  (ref) => PokeNewsNotifier(ref.read(pokemonNewsRepostiory))..init(),
+);
 
 final pokeNewsProviderPaginated = StateNotifierProvider<
-        PaginatedPokemonNewsNotifier, Paginator<List<PokemonNewsModel>>>(
-    (ref) =>
-        PaginatedPokemonNewsNotifier(ref.read(pokemonNewsRepostiory))..init());
+    PaginatedPokemonNewsNotifier, Paginator<List<PokemonNewsModel>>>(
+  (ref) =>
+      PaginatedPokemonNewsNotifier(ref.read(pokemonNewsRepostiory))..init(),
+);

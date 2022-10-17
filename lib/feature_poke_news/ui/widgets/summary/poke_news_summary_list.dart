@@ -4,7 +4,10 @@ import 'poke_news_summary_card.dart';
 
 class PokeNewsSummaryList extends StatelessWidget {
   final List<PokemonNewsModel> data;
-  const PokeNewsSummaryList({Key? key, required this.data}) : super(key: key);
+  const PokeNewsSummaryList({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class PokeNewsSummaryList extends StatelessWidget {
           childAspectRatio: 2, crossAxisCount: 1),
       itemCount: data.length,
       itemBuilder: (context, idx) => Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
         child: PokeNewsSummary(news: data[idx]),
       ),
     );

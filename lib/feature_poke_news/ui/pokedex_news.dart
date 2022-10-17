@@ -41,7 +41,8 @@ class _PokeDexNewsState extends State<PokeDexNews> {
                     padding: const EdgeInsets.all(4.0),
                     child: PokeNewsSummaryList(data: data),
                   ),
-                  error: (err, stk) => Center(child: Text('err $err')),
+                  error: (err, stk) =>
+                      const Center(child: Text('err happened')),
                   loading: () => const Center(
                     child: Spinner(),
                   ),

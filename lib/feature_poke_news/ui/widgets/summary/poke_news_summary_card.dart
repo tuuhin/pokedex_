@@ -11,11 +11,11 @@ class PokeNewsSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Row(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
               children: [
                 Flexible(
                   flex: 2,
@@ -24,8 +24,12 @@ class PokeNewsSummary extends StatelessWidget {
                       Text(tagRemover(news.title)),
                       const SizedBox(height: 4),
                       if (news.shortDescription != null) ...[
-                        Text(tagRemover(news.shortDescription!),
-                            style: Theme.of(context).textTheme.caption)
+                        Text(
+                          tagRemover(news.shortDescription!),
+                          style: Theme.of(context).textTheme.caption,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        )
                       ]
                     ],
                   ),
@@ -40,13 +44,13 @@ class PokeNewsSummary extends StatelessWidget {
                 )
               ],
             ),
-            const Divider(),
-            Text(
-              news.date,
-              style: const TextStyle(fontWeight: FontWeight.w500),
-            )
-          ],
-        ),
+          ),
+          const Divider(),
+          Text(
+            news.date,
+            style: const TextStyle(fontWeight: FontWeight.w500),
+          )
+        ],
       ),
     );
   }
