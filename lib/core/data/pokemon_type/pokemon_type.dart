@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class PokeMonType {
   final String type;
   final Color primaryColor;
-  final Color? secondaryColor;
+  final Color secondaryColor;
 
   const PokeMonType({
     required this.type,
     required this.primaryColor,
-    this.secondaryColor,
+    required this.secondaryColor,
   });
 
   static PokeMonType getPokeMonTypeById(int typeId) {
@@ -86,8 +86,8 @@ class PokeMonType {
       );
   factory PokeMonType._grass() => const PokeMonType(
         type: "Grass",
-        primaryColor: Color(0xFF78C850),
-        secondaryColor: Color(0xFFA7DB8D),
+        primaryColor: Color(0xFFA7DB8D),
+        secondaryColor: Color(0xFF78C850),
       );
   factory PokeMonType._poison() => const PokeMonType(
         type: "Poison",

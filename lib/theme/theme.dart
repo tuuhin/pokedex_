@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 ThemeData lightTheme = ThemeData(
   textTheme: GoogleFonts.notoSansOsageTextTheme(),
-  appBarTheme: const AppBarTheme(backgroundColor: Colors.transparent),
+  appBarTheme:
+      const AppBarTheme(backgroundColor: Colors.transparent, elevation: 0),
   primarySwatch: Colors.lightBlue,
   cardTheme: CardTheme(
     shape: RoundedRectangleBorder(
