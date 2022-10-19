@@ -1,3 +1,4 @@
+import 'package:flutter_pokedex/core/models/pokemon_effect_entries_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'base_dto.dart';
@@ -23,4 +24,7 @@ class PokemonEffectDto {
   factory PokemonEffectDto.fromJson(Map<String, dynamic> json) =>
       _$PokemonEffectDtoFromJson(json);
   Map<String, dynamic> toJson() => _$PokemonEffectDtoToJson(this);
+
+  PokemonEffectEntriesModel toModel() =>
+      PokemonEffectEntriesModel(effect: effect, shortEffect: shortEffect);
 }

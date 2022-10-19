@@ -1,3 +1,4 @@
+import 'package:flutter_pokedex/core/models/models.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'base_dto.dart';
@@ -17,4 +18,6 @@ class PokemonFlavourTextDto {
   factory PokemonFlavourTextDto.fromJson(Map<String, dynamic> json) =>
       _$PokemonFlavourTextDtoFromJson(json);
   Map<String, dynamic> toJson() => _$PokemonFlavourTextDtoToJson(this);
+
+  PokemonFlavourTextModel toModel() => PokemonFlavourTextModel(text: text);
 }
