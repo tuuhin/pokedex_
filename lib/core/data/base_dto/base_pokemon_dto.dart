@@ -1,3 +1,4 @@
+import 'package:flutter_pokedex/core/data/base_dto/base_response_results_dto.dart';
 import 'package:flutter_pokedex/core/models/base_pokemon_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -6,15 +7,16 @@ import '../../util/string_helper.dart';
 part 'base_pokemon_dto.g.dart';
 
 @JsonSerializable()
-class BasePokemonDto {
-  final String name;
-  final String url;
-  BasePokemonDto({required this.name, required this.url});
+class BasePokemonDto extends BaseResponseResultsDto {
+  BasePokemonDto({required String name, required String url})
+      : super(name: name, url: url);
   factory BasePokemonDto.fromJson(Map<String, dynamic> json) =>
       _$BasePokemonDtoFromJson(json);
+
+  @override
   Map<String, dynamic> toJson() => _$BasePokemonDtoToJson(this);
 
-  BasePokemonModel toModel() => BasePokemonModel(
+  BasePokemonModel toPokemonModel() => BasePokemonModel(
         name: name,
         url: url,
         imageUrl:

@@ -8,16 +8,17 @@ part 'pokemon_flavour_text_dto.g.dart';
 @JsonSerializable()
 class PokemonFlavourTextDto {
   @JsonKey(name: "flavour_text")
-  final String text;
+  final String? text;
 
   @JsonKey(name: "language")
   final PokemonLanguageDto language;
 
-  PokemonFlavourTextDto({required this.text, required this.language});
+  PokemonFlavourTextDto({this.text, required this.language});
 
   factory PokemonFlavourTextDto.fromJson(Map<String, dynamic> json) =>
       _$PokemonFlavourTextDtoFromJson(json);
   Map<String, dynamic> toJson() => _$PokemonFlavourTextDtoToJson(this);
 
-  PokemonFlavourTextModel toModel() => PokemonFlavourTextModel(text: text);
+  PokemonFlavourTextModel toModel() =>
+      PokemonFlavourTextModel(text: text ?? "");
 }

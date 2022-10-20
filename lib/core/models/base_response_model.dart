@@ -1,12 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'base_response_results_model.dart';
+
 part 'base_response_model.freezed.dart';
 
 @freezed
-class PokemonBaseResponse<T> with _$PokemonBaseResponse<T> {
+class PokemonBaseResponse with _$PokemonBaseResponse {
   factory PokemonBaseResponse({
     required int count,
-    required List<T> results,
+    required List<BaseResponseResults> results,
     String? previous,
     String? next,
   }) = _PokemonBaseResponse;
