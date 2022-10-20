@@ -69,5 +69,7 @@ class PokemonWithAbilityDto {
   Map<String, dynamic> toJson() => _$PokemonWithAbilityDtoToJson(this);
 
   PokemonWithAbility toModel() => PokemonWithAbility(
-      hiddenAbility: isHiddenAbility, pokemon: pokemon.toModel(), slots: slots);
+      hiddenAbility: isHiddenAbility,
+      pokemon: pokemon.toPokemonModel(),
+      slots: slots);
 }

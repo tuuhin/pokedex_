@@ -5,18 +5,18 @@ import 'package:retrofit/http.dart';
 
 part 'pokemon_ability_client.g.dart';
 
-@RestApi(baseUrl: 'https://pokeapi.co/api/v2/ability')
+@RestApi(baseUrl: 'https://pokeapi.co/api/v2/ability/')
 abstract class PokemonAbilityClient {
   factory PokemonAbilityClient(Dio dio, {String baseUrl}) =
       _PokemonAbilityClient;
 
   @GET("{ability_id}")
-  Future<PokemonAbilityDto> getMovesDetails({
+  Future<PokemonAbilityDto> getAbilityDetails({
     @Path("ability_id") required int id,
   });
 
-  @GET("move")
-  Future<BaseEndpointDto<PokemonAbilityDto>> getMove({
+  @GET("")
+  Future<BaseEndpointDto> getAbility({
     @Query("offset") int? offset,
     @Query("limit") int? limit,
   });
