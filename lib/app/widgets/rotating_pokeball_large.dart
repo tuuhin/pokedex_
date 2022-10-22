@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/core/context/providers.dart';
-import 'package:flutter_pokedex/main.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vector_math/vector_math.dart' show radians;
 
 class RotatingPokeBall extends StatefulWidget {
@@ -15,7 +12,8 @@ class _RotatingPokeBallState extends State<RotatingPokeBall>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _rotation;
-
+  late Animation<double> _fade;
+  late Animation<Color?> _color;
   @override
   void initState() {
     super.initState();
@@ -24,6 +22,15 @@ class _RotatingPokeBallState extends State<RotatingPokeBall>
       duration: const Duration(milliseconds: 5000),
     );
     _rotation = Tween<double>(begin: 0.0, end: 360).animate(_controller);
+    _fade = Tween<double>(begin: 0.2, end: 1).animate(CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.7, 1.0, curve: Curves.ease)));
+    _color = ColorTween(begin: Colors.grey, end: Colors.transparent).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut,
+      ),
+    );
     _controller.repeat();
   }
 
@@ -42,8 +49,7 @@ class _RotatingPokeBallState extends State<RotatingPokeBall>
         animation: _controller,
         builder: (context, child) =>
             Transform.rotate(angle: radians(_rotation.value), child: child),
-        child: Image.asset('assets/icons/poke_ball.png',
-            color: const Color.fromARGB(255, 223, 221, 221)),
+        child: Image.asset('assets/icons/poke_ball.png', color: _color.value),
       ),
     );
   }

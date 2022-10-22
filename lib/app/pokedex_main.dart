@@ -8,11 +8,13 @@ class MainPokDex extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
+          ),
           color: Theme.of(context).cardColor),
       child: Column(
         children: const [
-          SizedBox(height: 20),
           PokeMonHeader(),
           Expanded(
             child: PokeMonAboutCardList(),

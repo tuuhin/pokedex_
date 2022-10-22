@@ -14,19 +14,23 @@ class PokeMonHeader extends StatelessWidget {
       alignment: Alignment.topRight,
       children: [
         Positioned(
-            right: -size.width * .13,
-            top: -size.width * .13,
-            child: SizedBox(
-                height: size.width * .5, child: const RotatingPokeBall())),
+          right: -size.width * .13,
+          top: -size.width * .13,
+          child: SizedBox(
+            height: size.width * .5,
+            child: const RotatingPokeBall(),
+          ),
+        ),
         Positioned(
           right: size.width * .05,
           top: size.width * .05,
           child: Consumer(
-            builder: (context, ref, child) => FloatingActionButton(
-                onPressed: ref.read(themeProvider.notifier).toggleTheme,
-                child: ref.watch(themeProvider) == ThemeMode.dark
-                    ? const Icon(Icons.light_mode)
-                    : const Icon(Icons.dark_mode)),
+            builder: (context, ref, child) => IconButton(
+              onPressed: ref.read(themeProvider.notifier).toggleTheme,
+              icon: ref.watch(themeProvider) == ThemeMode.dark
+                  ? const Icon(Icons.light_mode)
+                  : const Icon(Icons.dark_mode),
+            ),
           ),
         ),
         Padding(
@@ -40,7 +44,7 @@ class PokeMonHeader extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).textTheme.bodyText1?.color),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               const TextField(
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
