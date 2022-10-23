@@ -9,7 +9,7 @@ import './pokemon_ability_provider.dart';
 final _abilityRepositoryProvider = Provider<PokemonAbilityRespository>(
     (ref) => PokemonAbilityRepositoryImpl());
 
-final pokemonAbilityNotifier = StateNotifierProvider<PokemonAbilityNotifier,
+final pokemonAbilityProvider = StateNotifierProvider<PokemonAbilityNotifier,
     Paginator<List<PokemonAbility>>>(
   (ref) => PokemonAbilityNotifier(ref.read(_abilityRepositoryProvider))..init(),
 );
