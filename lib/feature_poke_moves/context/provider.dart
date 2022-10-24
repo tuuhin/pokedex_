@@ -1,7 +1,7 @@
 import 'package:flutter_pokedex/feature_poke_moves/context/moves_paginated_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/paginator/paginator.dart';
+import '../../core/util/paginator/paginator.dart';
 import '../data/repository/repository.dart';
 import '../domain/domain.dart';
 

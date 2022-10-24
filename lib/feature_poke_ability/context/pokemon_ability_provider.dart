@@ -8,7 +8,6 @@ import '../../core/util/paginator/paginator.dart';
 import '../../core/util/string_helper.dart';
 import '../domain/models/pokemon_ability.dart';
 import '../domain/repository/pokemon_ability_repository.dart';
-import '../../main.dart';
 
 class PokemonAbilityNotifier
     extends StateNotifier<Paginator<List<PokemonAbility>>> {
@@ -24,7 +23,7 @@ class PokemonAbilityNotifier
 
   GlobalKey<SliverAnimatedListState> get key => _key;
 
-  int _offset = 0;
+  int _offset = 300;
 
   String? _nextURL;
 
@@ -41,7 +40,7 @@ class PokemonAbilityNotifier
       PokemonBaseResponse base = await _pokemonAbilityRespository.getAbility();
       _nextURL = base.next;
       if (_nextURL != null) {
-        _offset = getIdFromString(_nextURL!) ?? 1;
+        _offset = getOffsetFromString(_nextURL!) ?? 1;
       }
       List<PokemonAbility> abilities =
           await _pokemonAbilityRespository.getDetailedAbility(base.results);
@@ -70,8 +69,8 @@ class PokemonAbilityNotifier
     _limiter = Timer(const Duration(seconds: 2), () {});
     try {
       state = Paginator.loadMore(_ability);
-      PokemonBaseResponse base =
-          await _pokemonAbilityRespository.getAbility(offset: _offset);
+      PokemonBaseResponse base = await _pokemonAbilityRespository.getAbility(
+          offset: _offset, limit: 5);
 
       _nextURL = base.next;
       if (_nextURL != null) {
