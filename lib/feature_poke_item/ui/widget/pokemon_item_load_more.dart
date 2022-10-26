@@ -8,15 +8,30 @@ class PokemonItemLoadMore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(
-      builder: (context, ref, child) =>
-          ref.watch(poekmonItemProvider).maybeWhen(
-                orElse: () => const SliverToBoxAdapter(
-                  child: SizedBox.shrink(),
-                ),
-                data: (data) => const SliverFillRemaining(
-                  child: Text('data'),
+      builder: (context, ref, child) => ref
+          .watch(pokemonItemProvider)
+          .maybeWhen(
+            orElse: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
+            loadMore: (data) => SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: const [
+                    CircularProgressIndicator(),
+                    Text('Loading more...')
+                  ],
                 ),
               ),
+            ),
+            errorLoadMore: (date, err, stk) => SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('$err'),
+              ),
+            ),
+            end: (message, data) => SliverToBoxAdapter(child: Text(message)),
+          ),
     );
   }
 }

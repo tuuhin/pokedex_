@@ -9,7 +9,7 @@ import '../domain/repository/pokemon_item_repository.dart';
 final _pokemonItemRepositoryProvider =
     Provider<PokemonItemRepository>((ref) => PokemonItemRepositoryImpl());
 
-final poekmonItemProvider = StateNotifierProvider<PokemonItemNotifier,
+final pokemonItemProvider = StateNotifierProvider<PokemonItemNotifier,
     Paginator<List<PokemonItemModel>>>(
   (ref) => PokemonItemNotifier(
     ref.read(_pokemonItemRepositoryProvider),

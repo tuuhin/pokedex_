@@ -25,7 +25,7 @@ class PokemonItemNotifier
 
   String? _nextURL;
 
-  int get abilityCount => _items.length;
+  int get itemCount => _items.length;
 
   Timer _limiter = Timer(const Duration(seconds: 2), () {});
 
