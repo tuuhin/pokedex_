@@ -31,6 +31,7 @@ class PokeMonType {
       16: PokeMonType._dragon(),
       17: PokeMonType._dark(),
       18: PokeMonType._fairy(),
+      10002: PokeMonType._shadow()
     };
     return map[typeId] ?? PokeMonType._unknown();
   }
@@ -55,6 +56,7 @@ class PokeMonType {
       "dragon": PokeMonType._dragon(),
       "dark": PokeMonType._dark(),
       "fairy": PokeMonType._fairy(),
+      "shadow": PokeMonType._shadow()
     };
     return map[name] ?? PokeMonType._unknown();
   }
@@ -149,5 +151,10 @@ class PokeMonType {
         type: "Unknown",
         primaryColor: Color(0xFF68A090),
         secondaryColor: Color(0xFF44685E),
+      );
+  factory PokeMonType._shadow() => const PokeMonType(
+        type: 'Shadow',
+        primaryColor: Color(0xff604E82),
+        secondaryColor: Color(0xff978CAE),
       );
 }

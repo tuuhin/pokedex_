@@ -1,3 +1,4 @@
+import 'package:flutter_pokedex/core/models/base_pokemon_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/data/base_dto/base_pokemon_dto.dart';
@@ -46,7 +47,10 @@ class PokemonTypeChartsDto {
         damgeRelation: damageRelationDto.toModel(),
         moveDamageClass: moveDamageClass?.name,
         moves: moves.map((e) => e.name).toList(),
-        pokemons: pokemon.map((e) => e.pokemon.toPokemonModel()).toList(),
+        pokemons: pokemon
+            .map((e) => e.slot == 1 ? e.pokemon.toPokemonModel() : null)
+            .whereType<BasePokemonModel>()
+            .toList(),
       );
 
   Map<String, dynamic> toJson() => _$PokemonTypeChartsDtoToJson(this);
