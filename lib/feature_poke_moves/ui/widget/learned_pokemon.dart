@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/core/models/base_pokemon_model.dart';
 
 import '../../domain/models/pokemon_move_detail_model.dart';
 
 class StackedAvatars extends StatelessWidget {
-  final List<LearnedByPokemon> pokemon;
+  final List<BasePokemonModel> pokemon;
   final Color color;
   const StackedAvatars({
     super.key,
@@ -34,7 +35,7 @@ class StackedAvatars extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
                 (context, index) => CachedNetworkImage(
-                      imageUrl: pokemon[index].imageURL!,
+                      imageUrl: pokemon[index].imageUrl!,
                       placeholder: (context, url) => Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Container(

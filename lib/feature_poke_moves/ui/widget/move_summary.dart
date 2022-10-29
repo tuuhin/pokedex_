@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/pokemon/pokemon_type/pokemon_type.dart';
+import '../../../core/data/pokemon_type/pokemon_type.dart';
 import '../../domain/models/pokemon_move_detail_model.dart';
 
 class MoveSummary extends StatelessWidget {
@@ -19,7 +19,7 @@ class MoveSummary extends StatelessWidget {
             children: [
               TextSpan(
                   text: 'Flavour: ', style: TextStyle(color: secondaryColor)),
-              TextSpan(text: details.flavourText)
+              TextSpan(text: details.flavourText.first.text)
             ],
           ),
         ),
@@ -32,7 +32,7 @@ class MoveSummary extends StatelessWidget {
                     color: secondaryColor,
                   )),
               TextSpan(
-                  text: details.effect,
+                  text: details.effect.first.effect,
                   style: const TextStyle(overflow: TextOverflow.ellipsis))
             ],
           ),

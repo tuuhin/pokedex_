@@ -1,3 +1,4 @@
+import 'package:flutter_pokedex/core/models/models.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'pokemon_move_detail_model.freezed.dart';
@@ -6,7 +7,7 @@ part 'pokemon_move_detail_model.freezed.dart';
 class PokemonMoveDetailed with _$PokemonMoveDetailed {
   factory PokemonMoveDetailed({
     required String moveType,
-    required List<LearnedByPokemon> learnedByPokemon,
+    required List<BasePokemonModel> learnedByPokemon,
     required int id,
     required String name,
     int? power,
@@ -14,15 +15,7 @@ class PokemonMoveDetailed with _$PokemonMoveDetailed {
     required int priority,
     int? accuracy,
     required String damageClass,
-    required String effect,
-    required String flavourText,
+    required List<PokemonEffectEntriesModel> effect,
+    required List<PokemonFlavourTextModel> flavourText,
   }) = _PokemonMoveDetailed;
-}
-
-@freezed
-class LearnedByPokemon with _$LearnedByPokemon {
-  factory LearnedByPokemon(
-      {required String name,
-      required String url,
-      String? imageURL}) = _LearnedByPokemon;
 }

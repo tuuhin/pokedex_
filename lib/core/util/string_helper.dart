@@ -7,6 +7,6 @@ String removeSpecialChars(String str) =>
 int? getOffsetFromString(String url) =>
     int.tryParse(Uri.parse(url).queryParameters["offset"]!);
 
-extension TitleCase on String {
-  String toTitleCase() => split(RegExp(r"^[a-zA-Z0-9]*$")).first;
+String tagRemover(String str) {
+  return str.replaceAll(RegExp(r'<.*?>'), '');
 }

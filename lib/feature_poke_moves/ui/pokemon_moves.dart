@@ -1,10 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/feature_poke_moves/context/provider.dart';
 import 'package:flutter_pokedex/feature_poke_moves/ui/pokemon_moves_load_more.dart';
 import 'package:flutter_pokedex/feature_poke_moves/ui/pokemon_moves_loader.dart';
-import 'package:flutter_pokedex/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PokeMonMoves extends ConsumerStatefulWidget {

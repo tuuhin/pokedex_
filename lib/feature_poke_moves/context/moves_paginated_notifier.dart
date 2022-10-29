@@ -5,6 +5,7 @@ import 'package:flutter_pokedex/core/util/string_helper.dart';
 import 'package:flutter_pokedex/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/models/base_response_model.dart';
 import '../../core/util/paginator/paginator.dart';
 import '../domain/domain.dart';
 
@@ -32,8 +33,8 @@ class PokemonMovesPaginatedNotifier
 
   void _fetchSomeMoves() async {
     try {
-      PokemonMove move = await _impl.getMoves(limit: 5);
-      _nextURL = move.nextURL;
+      PokemonBaseResponse move = await _impl.getMoves(limit: 5);
+      _nextURL = move.next;
       if (_nextURL != null) {
         _offset = getOffsetFromString(_nextURL!) ?? 0;
       }
@@ -68,8 +69,9 @@ class PokemonMovesPaginatedNotifier
     _limiter = Timer(const Duration(seconds: 2), () {});
     try {
       state = Paginator.loadMore(_moves);
-      PokemonMove move = await _impl.getMoves(offset: _offset, limit: 10);
-      _nextURL = move.nextURL;
+      PokemonBaseResponse move =
+          await _impl.getMoves(offset: _offset, limit: 10);
+      _nextURL = move.next;
       if (_nextURL != null) {
         _offset = getOffsetFromString(_nextURL!) ?? _offset;
       }

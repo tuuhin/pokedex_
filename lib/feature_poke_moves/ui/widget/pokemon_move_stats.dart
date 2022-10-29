@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/core/pokemon/pokemon_type/pokemon_type.dart';
+import 'package:flutter_pokedex/core/data/pokemon_type/pokemon_type.dart';
 import 'package:flutter_pokedex/feature_poke_moves/domain/domain.dart';
 
 class PokemonMoveStats extends StatelessWidget {

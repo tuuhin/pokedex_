@@ -1,7 +1,8 @@
-import 'package:flutter_pokedex/core/util/string_helper.dart';
-import 'package:flutter_pokedex/main.dart';
-
+import '../../../core/data/base_dto/base_endpoint_dto.dart';
+import '../../../core/models/base_response_model.dart';
+import '../../../core/models/base_response_results_model.dart';
 import '../../../core/util/dio_client.dart';
+import '../../../core/util/string_helper.dart';
 import '../../domain/domain.dart';
 import '../remote/remote.dart';
 
@@ -10,7 +11,7 @@ class PokemonMovesRespositoryImpl implements PokemonMoveRespository {
 
   @override
   Future<List<PokemonMoveDetailed>> getDetailedMove(
-      List<PokemonMoveSimplified> results) async {
+      List<BaseResponseResults> results) async {
     List<int> moveIds =
         results.map((simp) => getIdFromString(simp.url) ?? 1).toList();
     List<PokemonMovesDetailedDto> movesDto =
@@ -19,8 +20,8 @@ class PokemonMovesRespositoryImpl implements PokemonMoveRespository {
   }
 
   @override
-  Future<PokemonMove> getMoves({int? offset, int? limit}) async {
-    PokemonMoveDto pokemonMove =
+  Future<PokemonBaseResponse> getMoves({int? offset, int? limit}) async {
+    BaseEndpointDto pokemonMove =
         await _client.getMove(offset: offset, limit: limit);
     return pokemonMove.toModel();
   }

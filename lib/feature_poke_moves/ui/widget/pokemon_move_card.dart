@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/feature_poke_moves/ui/ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../core/pokemon/pokemon_type/pokemon_type.dart';
+import '../../../core/data/pokemon_type/pokemon_type.dart';
 import '../../../core/util/string_helper.dart';
 import '../../domain/domain.dart';
+import '../ui.dart';
 
 class PokeMonMoveCard extends ConsumerWidget {
   final PokemonMoveDetailed details;
@@ -56,7 +56,7 @@ class PokeMonMoveCard extends ConsumerWidget {
                         ),
                         borderRadius: BorderRadius.circular(10)),
                     child: CachedNetworkImage(
-                      imageUrl: details.learnedByPokemon.first.imageURL!,
+                      imageUrl: details.learnedByPokemon.first.imageUrl!,
                       errorWidget: (context, url, error) =>
                           const SizedBox.shrink(),
                     ),
