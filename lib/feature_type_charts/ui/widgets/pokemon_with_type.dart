@@ -24,6 +24,8 @@ class PokemonWithTypes extends StatelessWidget {
                 width: 100,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  // crossAxisAlignment: CrossAxisAlignment.,
                   children: [
                     CachedNetworkImage(
                       height: 100,

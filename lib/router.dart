@@ -24,7 +24,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/type',
       builder: (BuildContext context, GoRouterState state) =>
-          const PokemonTypeChats(),
+          const PokemonTypeCharts(),
     ),
     GoRoute(
       path: '/news',

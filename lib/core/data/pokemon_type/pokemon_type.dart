@@ -31,6 +31,7 @@ class PokeMonType {
       16: PokeMonType._dragon(),
       17: PokeMonType._dark(),
       18: PokeMonType._fairy(),
+      10001: PokeMonType._unknown(),
       10002: PokeMonType._shadow()
     };
     return map[typeId] ?? PokeMonType._unknown();
