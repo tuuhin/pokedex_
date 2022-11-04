@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:go_router/go_router.dart';
 
 import './poke_about_cards.dart';
@@ -26,7 +25,7 @@ class _PokeMonAboutCardListState extends State<PokeMonAboutCardList> {
       child: GridView(
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          mainAxisSpacing: 10,
+          mainAxisSpacing: 15,
           crossAxisSpacing: 10,
           crossAxisCount: 2,
           childAspectRatio: 2.8,
@@ -34,33 +33,34 @@ class _PokeMonAboutCardListState extends State<PokeMonAboutCardList> {
         children: [
           PokeMonAboutCards(
             aboutText: 'PokeDex',
-            color: Colors.green,
+            color: const Color(0xff4fc1a6),
             onTap: openPokeDexRoute,
           ),
           PokeMonAboutCards(
             aboutText: 'Moves',
-            color: Colors.redAccent,
+            color: const Color(0xfff7776a),
             onTap: openMovesRoute,
           ),
           PokeMonAboutCards(
             aboutText: 'Ability',
-            color: Colors.blueAccent,
+            color: const Color(0xff58a9f4),
             onTap: openAbilityRoute,
           ),
           PokeMonAboutCards(
             aboutText: 'Item',
-            color: Colors.orangeAccent,
+            color: const Color(0xffffce4b),
             onTap: openItemRoute,
           ),
           PokeMonAboutCards(
             aboutText: 'Location',
-            color: Colors.deepPurple,
+            color: const Color(0xff7c528c),
             onTap: openLocationRoute,
           ),
           PokeMonAboutCards(
-              aboutText: 'Type Charts',
-              color: Colors.brown,
-              onTap: openTypeRoute),
+            aboutText: 'Type Charts',
+            color: const Color(0xffb1736d),
+            onTap: openTypeRoute,
+          ),
         ],
       ),
     );
