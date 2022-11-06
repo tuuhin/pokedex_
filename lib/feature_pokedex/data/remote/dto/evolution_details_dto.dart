@@ -47,8 +47,8 @@ class EvolutionDetailDto {
   EvolutionDetailDto({
     this.gender,
     this.heldItem,
-    required this.item,
-    required this.location,
+    this.item,
+    this.location,
     required this.minLevel,
     required this.timeOfDay,
     required this.trigger,
@@ -57,8 +57,8 @@ class EvolutionDetailDto {
   Gender? gender;
   @JsonKey(name: "held_item")
   BaseResponseResultsDto? heldItem;
-  BaseResponseResultsDto item;
-  BaseResponseResultsDto location;
+  BaseResponseResultsDto? item;
+  BaseResponseResultsDto? location;
   @JsonKey(name: "min_level")
   int minLevel;
   @JsonKey(name: "time_of_day")

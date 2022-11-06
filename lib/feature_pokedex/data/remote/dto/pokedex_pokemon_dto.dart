@@ -1,17 +1,17 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../../feature_poke_ability/data/remote/dto/pokemon_ability_dto.dart';
-import '../../../../feature_type_charts/data/remote/dto/pokemon_with_type.dart';
+import '../../../../core/util/string_helper.dart';
+import '../../../domain/models/pokemon_simplified_model.dart';
 import '../remote.dart';
 
 part 'pokedex_pokemon_dto.g.dart';
 
-/// [Info] this is the main serializer of the app thus relation
+/// **Info**:Being the  main serializer of the app thus relation
 ///  with other features are allowed
 @JsonSerializable()
 class PokedexPokemonDto {
   @JsonKey(name: "abilities")
-  final List<PokemonWithAbilityDto> abilities;
+  final List<PokedexAbilityDto> abilities;
   @JsonKey(name: "base_experience")
   final int baseXp;
   @JsonKey(name: "height")
@@ -21,17 +21,19 @@ class PokedexPokemonDto {
   @JsonKey(name: "is_default")
   final bool isDefault;
   @JsonKey(name: "moves")
-  final PokedexPokemonMove moves;
+  final List<PokedexPokemonMove> moves;
   @JsonKey(name: "name")
   final String name;
   @JsonKey(name: "order")
   final int order;
   @JsonKey(name: "stats")
-  final PokedexPokemonStatsDto stats;
+  final List<PokedexPokemonStatsDto> stats;
   @JsonKey(name: "types")
-  final PokemonWithTypeDto types;
+  final List<PokedexPokemonTypeDto> types;
   @JsonKey(name: "weight")
   final int weight;
+  @JsonKey(name: "sprites")
+  final PokemonSpritesDto sprites;
 
   PokedexPokemonDto({
     required this.abilities,
@@ -45,10 +47,21 @@ class PokedexPokemonDto {
     required this.id,
     required this.weight,
     required this.isDefault,
+    required this.sprites,
   });
 
   factory PokedexPokemonDto.fromJson(Map<String, dynamic> json) =>
       _$PokedexPokemonDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$PokedexPokemonDtoToJson(this);
+
+  PokedexPokemonSimplifiedModel toSimpleModel() =>
+      PokedexPokemonSimplifiedModel(
+        name: name,
+        pokemonId: id,
+        typeIds:
+            types.map((e) => getIdFromString(e.pokemon.name) ?? 0).toList(),
+        imageUrl: sprites.others.officialArtworkSprites.frontDefault,
+        types: types.map((e) => e.pokemon.name).toList(),
+      );
 }
