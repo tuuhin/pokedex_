@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/util/paginator/paginator.dart';
 import '../../../core/widget/transitions.dart';
 import '../../context/provider.dart';
+import '../../domain/models/pokemon_ability_model.dart';
 import '../ui.dart';
 
 class PokemonAbilityLoader extends ConsumerWidget {
@@ -10,8 +12,10 @@ class PokemonAbilityLoader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => SliverPadding(
-        padding: const EdgeInsets.all(8.0),
-        sliver: ref.watch(pokemonAbilityProvider).when(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
+        sliver: ref
+            .watch<Paginator<List<PokemonAbility>>>(pokemonAbilityProvider)
+            .when(
               loading: () => const SliverFillRemaining(
                 child: Center(child: Text('loading')),
               ),

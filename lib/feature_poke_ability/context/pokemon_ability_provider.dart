@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/models/base_response_model.dart';
 import '../../core/util/paginator/paginator.dart';
 import '../../core/util/string_helper.dart';
-import '../domain/models/pokemon_ability.dart';
+import '../domain/models/pokemon_ability_model.dart';
 import '../domain/repository/pokemon_ability_repository.dart';
 
 class PokemonAbilityNotifier
@@ -57,6 +57,7 @@ class PokemonAbilityNotifier
       }
     } catch (e, stk) {
       debugPrintStack(stackTrace: stk);
+      state = Paginator.error(e, stk);
     }
   }
 
@@ -74,13 +75,7 @@ class PokemonAbilityNotifier
 
       _nextURL = base.next;
       if (_nextURL != null) {
-        int newOffset = getOffsetFromString(_nextURL!) ?? _offset;
-        if (newOffset > _offset) {
-          _offset = newOffset;
-        } else {
-          state = Paginator.end("The end", _ability);
-          return;
-        }
+        _offset = getOffsetFromString(_nextURL!) ?? _offset;
       }
 
       List<PokemonAbility> abilities =

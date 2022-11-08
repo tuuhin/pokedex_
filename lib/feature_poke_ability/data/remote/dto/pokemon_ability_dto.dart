@@ -1,13 +1,16 @@
-import 'package:flutter_pokedex/feature_poke_ability/domain/models/pokemon_ability.dart';
-import 'package:flutter_pokedex/feature_poke_ability/domain/models/pokemon_with_ability_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/data/base_dto/base_dto.dart';
+import '../../../domain/models/pokemon_ability_model.dart';
+import '../../../domain/models/pokemon_with_ability_model.dart';
 
 part 'pokemon_ability_dto.g.dart';
 
 @JsonSerializable()
 class PokemonAbilityDto {
+  @JsonKey(name: "id")
+  final int id;
+
   @JsonKey(name: "name")
   final String name;
 
@@ -24,6 +27,7 @@ class PokemonAbilityDto {
   final List<PokemonWithAbilityDto> pokemonWithAbility;
 
   PokemonAbilityDto({
+    required this.id,
     required this.effectEnties,
     required this.isMainSeries,
     required this.flavourTextEntries,
@@ -36,6 +40,7 @@ class PokemonAbilityDto {
   Map<String, dynamic> toJson() => _$PokemonAbilityDtoToJson(this);
 
   PokemonAbility toModel() => PokemonAbility(
+        id: id,
         name: name,
         pokemon: pokemonWithAbility.map((e) => e.toModel()).toList(),
         flavourText: flavourTextEntries
@@ -69,7 +74,8 @@ class PokemonWithAbilityDto {
   Map<String, dynamic> toJson() => _$PokemonWithAbilityDtoToJson(this);
 
   PokemonWithAbility toModel() => PokemonWithAbility(
-      hiddenAbility: isHiddenAbility,
-      pokemon: pokemon.toPokemonModel(),
-      slots: slots);
+        hiddenAbility: isHiddenAbility,
+        pokemon: pokemon.toPokemonModel(),
+        slots: slots,
+      );
 }

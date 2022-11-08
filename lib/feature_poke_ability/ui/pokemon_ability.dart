@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/feature_poke_ability/context/provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../core/util/paginator/paginator.dart';
+import '../../core/widget/blurry_appbar.dart';
+import '../context/provider.dart';
+import '../domain/models/pokemon_ability_model.dart';
 import '../ui/ui.dart';
 
 class PokemonAbilityPage extends ConsumerStatefulWidget {
@@ -22,11 +26,30 @@ class _PokemonAbilityPageState extends ConsumerState<PokemonAbilityPage> {
     }
   }
 
+  void _postFrameCallBack(Duration timestamp) async {
+    int count = ref.read(pokemonAbilityProvider.notifier).abilityCount;
+    GlobalKey<SliverAnimatedListState> listKey =
+        ref.read(pokemonAbilityProvider.notifier).key;
+    for (int i = 0; i < count; i++) {
+      await Future.delayed(
+        const Duration(milliseconds: 100),
+        () => listKey.currentState?.insertItem(i),
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollCallBack);
+    WidgetsBinding.instance.addPostFrameCallback(_postFrameCallBack);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -34,15 +57,21 @@ class _PokemonAbilityPageState extends ConsumerState<PokemonAbilityPage> {
     return Scaffold(
       body: Scrollbar(
         controller: _scrollController,
-        child: CustomScrollView(
-          controller: _scrollController,
-          slivers: const [
-            SliverAppBar(
-              title: Text('Pokemon Ability'),
-            ),
-            PokemonAbilityLoader(),
-            PokemonAbilityLoadMore()
-          ],
+        child: SafeArea(
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              const SliverAppBar(),
+              SliverPersistentHeader(
+                floating: true,
+                delegate: BlurryAppBar(
+                  title: "Abilities",
+                ),
+              ),
+              const PokemonAbilityLoader(),
+              const PokemonAbilityLoadMore()
+            ],
+          ),
         ),
       ),
     );

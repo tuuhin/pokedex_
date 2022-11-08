@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_pokedex/core/data/base_dto/base_endpoint_dto.dart';
-import 'package:flutter_pokedex/feature_poke_ability/data/remote/dto/pokemon_ability_dto.dart';
 import 'package:retrofit/http.dart';
+
+import '../../../core/data/base_dto/base_dto.dart';
+import './dto/pokemon_ability_dto.dart';
 
 part 'pokemon_ability_client.g.dart';
 
