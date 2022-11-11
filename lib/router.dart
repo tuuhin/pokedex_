@@ -8,7 +8,9 @@ import 'feature_poke_location/ui/pokeomn_locations.dart';
 import 'feature_poke_moves/ui/pokemon_moves.dart';
 import 'feature_poke_news/ui/routes/show_poke_news.dart';
 import 'feature_pokedex/ui/pokedex_base.dart';
+import 'feature_pokedex/ui/pokedex_detailed.dart';
 import 'feature_type_charts/ui/pokemon_type_charts.dart';
+import 'main.dart';
 
 final GoRouter router = GoRouter(
   routes: <GoRoute>[
@@ -21,6 +23,14 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) =>
           const PokedexBaseRoute(),
     ),
+    GoRoute(
+        path: '/pokedex-detailed/:idx',
+        builder: (context, state) {
+          int pokemonId = int.tryParse(state.params["idx"] as String) ?? 0;
+          return PokedexDetailed(
+            pokemonId: pokemonId,
+          );
+        }),
     GoRoute(
       path: '/type',
       builder: (BuildContext context, GoRouterState state) =>
