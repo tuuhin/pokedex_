@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/data/base_dto/base_dto.dart';
+import '../../../domain/models/models.dart';
 
 part 'pokedex_pokemon_move_dto.g.dart';
 
@@ -20,6 +21,11 @@ class PokedexPokemonMove {
       _$PokedexPokemonMoveFromJson(json);
 
   Map<String, dynamic> toJson() => _$PokedexPokemonMoveToJson(this);
+
+  PokedexMoveModel toModel() => PokedexMoveModel(
+      moveName: move.name,
+      learnedAt: details.map((e) => e.levelLearnedAt).toList(),
+      moveLearnMethod: details.map((e) => e.moveLearnedMethod.name).toList());
 }
 
 @JsonSerializable()

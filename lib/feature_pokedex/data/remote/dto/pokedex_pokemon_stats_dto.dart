@@ -1,3 +1,4 @@
+import 'package:flutter_pokedex/feature_pokedex/domain/models/base_stats_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/data/base_dto/base_dto.dart';
@@ -19,4 +20,7 @@ class PokedexPokemonStatsDto {
       _$PokedexPokemonStatsDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$PokedexPokemonStatsDtoToJson(this);
+
+  BaseStatsModel toModel() =>
+      BaseStatsModel(name: stat.name, baseStat: baseStat, effort: effort);
 }

@@ -1,3 +1,4 @@
+import 'package:flutter_pokedex/feature_pokedex/domain/models/pokedex_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/util/string_helper.dart';
@@ -13,7 +14,7 @@ class PokedexPokemonDto {
   @JsonKey(name: "abilities")
   final List<PokedexAbilityDto> abilities;
   @JsonKey(name: "base_experience")
-  final int baseXp;
+  final int? baseXp;
   @JsonKey(name: "height")
   final int height;
   @JsonKey(name: "id")
@@ -42,7 +43,7 @@ class PokedexPokemonDto {
     required this.order,
     required this.stats,
     required this.types,
-    required this.baseXp,
+    this.baseXp,
     required this.height,
     required this.id,
     required this.weight,
@@ -59,9 +60,14 @@ class PokedexPokemonDto {
       PokedexPokemonSimplifiedModel(
         name: name,
         pokemonId: id,
-        typeIds:
-            types.map((e) => getIdFromString(e.pokemon.name) ?? 0).toList(),
         imageUrl: sprites.others.officialArtworkSprites.frontDefault,
         types: types.map((e) => e.pokemon.name).toList(),
+      );
+
+  PokedexPokemonModel toModel() => PokedexPokemonModel(
+        stats: stats.map((e) => e.toModel()).toList(),
+        moves: moves.map((e) => e.toModel()).toList(),
+        simple: toSimpleModel(),
+        isDefault: isDefault,
       );
 }

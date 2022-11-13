@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/feature_pokedex/context/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../context/providers.dart';
 
 class PokeDexPokemonLoadMore extends ConsumerWidget {
   const PokeDexPokemonLoadMore({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => SliverPadding(
-      padding: const EdgeInsets.all(8.0),
-      sliver: ref.watch(simplifiedPokedexPokemonProvider).maybeWhen(
+  Widget build(BuildContext context, WidgetRef ref) =>
+      ref.watch(pokedexPokemonProvider).maybeWhen(
             orElse: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
             loadMore: (data) => SliverToBoxAdapter(
               child: Padding(
@@ -29,5 +29,5 @@ class PokeDexPokemonLoadMore extends ConsumerWidget {
               ),
             ),
             end: (message, data) => SliverToBoxAdapter(child: Text(message)),
-          ));
+          );
 }
