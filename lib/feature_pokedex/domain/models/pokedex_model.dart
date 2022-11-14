@@ -11,5 +11,6 @@ class PokedexPokemonModel with _$PokedexPokemonModel {
     required List<PokedexMoveModel> moves,
     required PokedexPokemonSimplifiedModel simple,
     required bool isDefault,
+    @Default(0) int? baseXP,
   }) = _PokedexPokemonModel;
 }

@@ -6,7 +6,7 @@ part 'base_stats_model.freezed.dart';
 class BaseStatsModel with _$BaseStatsModel {
   factory BaseStatsModel({
     required String name,
-    required int baseStat,
-    required int effort,
+    required double baseStat,
+    required double effort,
   }) = _BaseStatsModel;
 }

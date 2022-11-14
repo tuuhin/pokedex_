@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/feature_pokedex/domain/models/models.dart';
 import 'package:flutter_pokedex/feature_pokedex/ui/widgets/widgets.dart';
 
 class PokemonDetailsTab extends StatefulWidget {
-  const PokemonDetailsTab({Key? key}) : super(key: key);
+  final PokedexPokemonModel model;
+  const PokemonDetailsTab({Key? key, required this.model}) : super(key: key);
 
   @override
   State<PokemonDetailsTab> createState() => _PokemonDetailsTabState();
@@ -25,13 +27,6 @@ class _PokemonDetailsTabState extends State<PokemonDetailsTab>
   }
 
   final List<String> _tabNames = ["About", "Stats", "Evolution", "Moves"];
-
-  final List<Widget> _tabs = const [
-    PokemonAboutTab(),
-    PokemonStatsTab(),
-    PokemonEvolutionTab(),
-    PokemonMovesTab()
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +57,12 @@ class _PokemonDetailsTabState extends State<PokemonDetailsTab>
                     .toList(),
               ),
               Expanded(
-                child: TabBarView(controller: _tabController, children: _tabs),
+                child: TabBarView(controller: _tabController, children: [
+                  PokemonAboutTab(),
+                  PokemonStatsTab(stats: widget.model.stats),
+                  PokemonEvolutionTab(),
+                  PokemonMovesTab(moves: widget.model.moves)
+                ]),
               ),
             ],
           ),
