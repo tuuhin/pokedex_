@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/core/widget/core_widgets.dart';
 import 'package:flutter_pokedex/core/widget/transitions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -50,9 +51,10 @@ class _PokeNewsDetailedState extends ConsumerState<PokeNewsDetailed> {
                 child: PokeNewsDetailedCard(news: data[index]),
               ),
             ),
-            error: (err, stk) => const SliverFillRemaining(
-              child: Icon(Icons.face),
-            ),
+            error: (err, stk) => SliverFillRemaining(
+                child: PaginatorErrorWidget(
+                    refresh:
+                        ref.read(pokeNewsProviderPaginated.notifier).refresh)),
             errorLoadMore: (data, err, stk) => SliverAnimatedList(
               key: ref.read(pokeNewsProviderPaginated.notifier).newsStateKey,
               itemBuilder: (context, index, animation) => LoadTransition(

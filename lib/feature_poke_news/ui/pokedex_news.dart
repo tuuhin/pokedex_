@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/widget/spinner.dart';
 import '../context/providers.dart';
-import './routes/show_poke_news.dart';
-import './widgets/summary/poke_news_summary_list.dart';
+import 'widgets/widgets.dart';
 
 class PokeDexNews extends StatefulWidget {
   const PokeDexNews({Key? key}) : super(key: key);
@@ -14,35 +14,36 @@ class PokeDexNews extends StatefulWidget {
 }
 
 class _PokeDexNewsState extends State<PokeDexNews> {
-  void _viewMoreNews() => Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => const ShowPokeNews()));
+  void _viewMoreNews() => context.push('/news');
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
-          title: Text('Pokemon News',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  ?.copyWith(fontWeight: FontWeight.w700)),
-          trailing: TextButton(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text('Pokemon News',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    ?.copyWith(fontWeight: FontWeight.w700)),
+            TextButton(
               onPressed: _viewMoreNews,
-              child: const Text(
-                'View More',
-                style: TextStyle(decoration: TextDecoration.underline),
-              )),
+              child: Text('View More',
+                  style: Theme.of(context).textTheme.button?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      )),
+            ),
+          ],
         ),
         Expanded(
           child: Consumer(
             builder: (context, ref, child) => ref.watch(pokeNewsProvider).when(
-                  data: (data) => Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: PokeNewsSummaryList(data: data),
+                  data: (data) => PokeNewsSummaryList(data: data),
+                  error: (err, stk) => PokemonNewsLoadFailed(
+                    refresh: ref.read(pokeNewsProvider.notifier).tryAgain,
                   ),
-                  error: (err, stk) =>
-                      const Center(child: Text('err happened')),
                   loading: () => const Center(
                     child: Spinner(),
                   ),

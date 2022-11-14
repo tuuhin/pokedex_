@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/main.dart';
+import 'package:flutter_pokedex/core/widget/core_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../context/providers.dart';
-import '../widgets/widgets.dart';
+import '../../core/util/paginator/paginator.dart';
+import '../context/providers.dart';
+import '../domain/models/pokemon_news_models.dart';
+import './widgets/widgets.dart';
+import '../../core/widget/blurry_appbar.dart';
 
 class ShowPokeNews extends ConsumerStatefulWidget {
   const ShowPokeNews({Key? key}) : super(key: key);
@@ -44,17 +47,17 @@ class _ShowPokeNewsState extends ConsumerState<ShowPokeNews> {
       extendBodyBehindAppBar: true,
       body: Scrollbar(
         controller: _scrollController,
-        thumbVisibility: true,
-        child: CustomScrollView(
-          controller: _scrollController,
-          slivers: const [
-            SliverAppBar(
-              floating: true,
-              title: Text('Pokemon News'),
-            ),
-            PokeNewsDetailed(),
-            PokeDetailedNewsLoadMore()
-          ],
+        child: SafeArea(
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              const SliverAppBar(),
+              SliverPersistentHeader(
+                  floating: true, delegate: BlurryAppBar(title: "News")),
+              const PokeNewsDetailed(),
+              const PokeDetailedNewsLoadMore()
+            ],
+          ),
         ),
       ),
     );
