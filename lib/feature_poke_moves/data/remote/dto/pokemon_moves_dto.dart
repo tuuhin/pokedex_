@@ -1,3 +1,4 @@
+import 'package:flutter_pokedex/core/util/string_helper.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/data/base_dto/base_dto.dart';
@@ -23,18 +24,19 @@ class PokemonMovesDetailedDto {
   @JsonKey(name: "learned_by_pokemon")
   final List<BasePokemonDto> learnedByPokemon;
 
-  PokemonMovesDetailedDto(
-      {required this.id,
-      required this.name,
-      this.power,
-      required this.pp,
-      required this.priority,
-      this.accuracy,
-      required this.damageClass,
-      required this.effectEntries,
-      required this.flavourText,
-      required this.learnedByTypeDto,
-      required this.learnedByPokemon});
+  PokemonMovesDetailedDto({
+    required this.id,
+    required this.name,
+    this.power,
+    required this.pp,
+    required this.priority,
+    this.accuracy,
+    required this.damageClass,
+    required this.effectEntries,
+    required this.flavourText,
+    required this.learnedByTypeDto,
+    required this.learnedByPokemon,
+  });
 
   factory PokemonMovesDetailedDto.fromJson(Map<String, dynamic> json) =>
       _$PokemonMovesDetailedDtoFromJson(json);
@@ -42,7 +44,7 @@ class PokemonMovesDetailedDto {
 
   PokemonMoveDetailed toMove() => PokemonMoveDetailed(
         id: id,
-        name: name,
+        name: name.removeDash(),
         power: power,
         pp: pp,
         moveType: learnedByTypeDto.name,

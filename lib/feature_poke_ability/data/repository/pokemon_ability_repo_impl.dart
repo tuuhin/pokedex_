@@ -22,7 +22,7 @@ class PokemonAbilityRepositoryImpl implements PokemonAbilityRespository {
   @override
   Future<List<PokemonAbility>> getDetailedAbility(
       List<BaseResponseResults> results) async {
-    Iterable<int> ids = results.map((e) => getIdFromString(e.url) ?? 1);
+    Iterable<int> ids = results.map((e) => getIdFromString(e.url));
     Iterable<PokemonAbilityDto> ability = await Future.wait(
         ids.map((id) => _clt.getAbilityDetails(id: id)),
         eagerError: true);

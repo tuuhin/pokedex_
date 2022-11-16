@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/widget/end_of_list_widget.dart';
+import '../../core/widget/error/load_more_error_widget.dart';
+import '../../core/widget/load_more_widget.dart';
 import '../context/provider.dart';
 
 class PokemonMovesLoadMore extends StatelessWidget {
@@ -8,27 +11,12 @@ class PokemonMovesLoadMore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer(
-        builder: (context, ref, _) => ref.watch(pokeMovesProvider).maybeWhen(
-              orElse: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
-              loadMore: (data) => SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      CircularProgressIndicator(),
-                      Text('Loading more...')
-                    ],
-                  ),
-                ),
-              ),
-              errorLoadMore: (date, err, stk) => SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('$err'),
-                ),
-              ),
-              end: (message, data) => const Text('We reached end'),
-            ),
-      );
+      builder: (context, ref, _) => ref.watch(pokeMovesProvider).maybeWhen(
+          orElse: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
+          loadMore: (data) => const SliverToBoxAdapter(
+              child: LoadMoreWidget(message: "Fetching More Moves")),
+          errorLoadMore: (data, err, stk) =>
+              const SliverToBoxAdapter(child: LoadMoreErrorWidget()),
+          end: (message, data) =>
+              SliverToBoxAdapter(child: EndOfListWidget(text: message))));
 }

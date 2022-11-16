@@ -17,30 +17,44 @@ class PokeMonMoveCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Color primaryColor =
-        PokeMonType.getPokeMonTypeByName(details.moveType).primaryColor;
-    Color secondaryColor =
-        PokeMonType.getPokeMonTypeByName(details.moveType).secondaryColor;
+    PokeMonType pokemonType =
+        PokeMonType.getPokeMonTypeByName(details.moveType);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         padding: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-            color: primaryColor,
-            border: Border.all(color: secondaryColor, width: 2),
-            borderRadius: BorderRadius.circular(20)),
+            color: pokemonType.primaryColor,
+            border: Border.all(color: pokemonType.secondaryColor, width: 1),
+            borderRadius: BorderRadius.circular(10)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
-              alignment: Alignment.center,
-              child: Text(details.name,
-                  style: Theme.of(context).textTheme.headline6?.copyWith(
-                      color: secondaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: GoogleFonts.poppins().fontFamily)),
+            Row(
+              children: [
+                Flexible(
+                  flex: 8,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(details.name,
+                        style: Theme.of(context).textTheme.headline6?.copyWith(
+                            color: pokemonType.secondaryColor,
+                            fontWeight: FontWeight.w800)),
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Text(
+                    decoratedId(details.id),
+                    style: TextStyle(
+                        color: pokemonType.secondaryColor,
+                        fontWeight: FontWeight.w600),
+                  ),
+                )
+              ],
             ),
-            Divider(color: secondaryColor),
+            Divider(color: pokemonType.secondaryColor),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,9 +64,9 @@ class PokeMonMoveCard extends ConsumerWidget {
                   flex: 2,
                   child: Container(
                     decoration: BoxDecoration(
-                        color: secondaryColor.withOpacity(0.1),
+                        color: pokemonType.secondaryColor.withOpacity(0.1),
                         border: Border.all(
-                          color: secondaryColor.withOpacity(0.5),
+                          color: pokemonType.secondaryColor.withOpacity(0.5),
                         ),
                         borderRadius: BorderRadius.circular(10)),
                     child: CachedNetworkImage(
@@ -67,14 +81,11 @@ class PokeMonMoveCard extends ConsumerWidget {
             PokemonMoveStats(details: details),
             Text('Learned by:',
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    color: secondaryColor, fontWeight: FontWeight.w600)),
-            StackedAvatars(
-              color: secondaryColor,
-              pokemon: details.learnedByPokemon
-                  .sublist(2)
-                  .where(
-                      (pokemon) => (getIdFromString(pokemon.url) ?? 1) < 1000)
-                  .toList(),
+                    color: pokemonType.secondaryColor,
+                    fontWeight: FontWeight.w600)),
+            LeanedByPokemon(
+              color: pokemonType.secondaryColor,
+              pokemons: details.learnedByPokemon.sublist(1).toList(),
             ),
           ],
         ),

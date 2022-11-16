@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/core/data/pokemon_type/pokemon_type.dart';
 import 'package:flutter_pokedex/feature_poke_moves/domain/domain.dart';
+import 'package:flutter_pokedex/feature_poke_moves/ui/widget/pokemon_move_stats_bar.dart';
 
 class PokemonMoveStats extends StatelessWidget {
   final PokemonMoveDetailed details;
@@ -16,91 +17,31 @@ class PokemonMoveStats extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
             color: secondaryColor.withOpacity(0.1),
-            border: Border.all(
-              color: secondaryColor.withOpacity(0.5),
-            ),
+            border:
+                Border.all(color: secondaryColor.withOpacity(0.5), width: 2),
             borderRadius: BorderRadius.circular(10)),
-        child: SizedBox(
-            height: 60,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Power: ',
-                            style: TextStyle(
-                              color: secondaryColor,
-                            ),
-                          ),
-                          TextSpan(
-                            text: details.power == null
-                                ? 'Unknown'
-                                : details.power.toString(),
-                          )
-                        ],
-                      ),
-                    ),
-                    const VerticalDivider(),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                              text: 'Pp: ',
-                              style: TextStyle(
-                                color: secondaryColor,
-                              )),
-                          TextSpan(
-                            text: details.pp.toString(),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                              text: 'Accuracy: ',
-                              style: TextStyle(
-                                color: secondaryColor,
-                              )),
-                          TextSpan(
-                            text: details.accuracy == null
-                                ? 'Unknown'
-                                : details.accuracy.toString(),
-                          )
-                        ],
-                      ),
-                    ),
-                    const VerticalDivider(),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                              text: 'Priority: ',
-                              style: TextStyle(
-                                color: secondaryColor,
-                              )),
-                          TextSpan(
-                            text: details.priority.toString(),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            )),
+        child: Column(
+          children: [
+            PokemonMoveStatsBar(
+                name: "Accuracy",
+                secondaryColor: secondaryColor,
+                value: details.accuracy),
+            PokemonMoveStatsBar(
+              name: "pp",
+              secondaryColor: secondaryColor,
+              value: details.pp,
+            ),
+            PokemonMoveStatsBar(
+                name: "Power",
+                secondaryColor: secondaryColor,
+                value: details.power),
+            PokemonMoveStatsBar(
+              name: "Priority",
+              secondaryColor: secondaryColor,
+              value: details.priority,
+            ),
+          ],
+        ),
       ),
     );
   }
