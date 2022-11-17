@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../data/remote/remote.dart';
+
 part 'evolution_chain_details_model.freezed.dart';
 
 @freezed
@@ -12,8 +14,12 @@ class EvolutionChainDetailedModel with _$EvolutionChainDetailedModel {
 @freezed
 class EvolutionChain with _$EvolutionChain {
   factory EvolutionChain({
-    required List<EvolutionDetails> details,
+    required EvolutionDetails details,
+    required String fromSpecies,
     required bool isBaby,
+    required String toSpecies,
+    required String toSpeciesURL,
+    String? fromSpeciesURL,
   }) = _EvolutionChain;
 }
 
@@ -24,12 +30,8 @@ class EvolutionDetails with _$EvolutionDetails {
     String? heldItemName,
     String? itemName,
     String? location,
-    required int minLevel,
+    int? minLevel,
     required TimeOfDay timeOfDay,
     required String triggerName,
   }) = _EvolutionDetails;
 }
-
-enum TimeOfDay { empty, day, night }
-
-enum Gender { male, female, genderless }
