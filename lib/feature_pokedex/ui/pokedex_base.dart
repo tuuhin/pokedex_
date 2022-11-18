@@ -20,7 +20,7 @@ class _PokedexBaseRouteState extends ConsumerState<PokedexBaseRoute> {
     double delta = MediaQuery.of(context).size.height * .2;
     if (_controller.position.maxScrollExtent - _controller.position.pixels <=
         delta) {
-      ref.read(simplifiedPokedexPokemonProvider.notifier).requestMore();
+      ref.read(pokedexPokemonProvider.notifier).requestMore();
     }
   }
 
@@ -37,22 +37,31 @@ class _PokedexBaseRouteState extends ConsumerState<PokedexBaseRoute> {
     super.dispose();
   }
 
+  int _colCount(BoxConstraints constraints) {
+    if (constraints.maxWidth > 600) {
+      return 6;
+    } else {
+      return 2;
+    }
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         body: Scrollbar(
           controller: _controller,
           child: SafeArea(
-            child: CustomScrollView(
-              controller: _controller,
-              slivers: [
-                const SliverAppBar(),
-                // const SliverAppBar(),
-                SliverPersistentHeader(
-                    floating: true, delegate: BlurryAppBar(title: "Pokemon")),
-                const PokeDexPokemonLoader(),
-                const PokeDexPokemonLoadMore()
-              ],
-            ),
+            child: LayoutBuilder(builder: (context, constraints) {
+              return CustomScrollView(
+                controller: _controller,
+                slivers: [
+                  const SliverAppBar(),
+                  SliverPersistentHeader(
+                      floating: true, delegate: BlurryAppBar(title: "Pokemon")),
+                  PokeDexPokemonLoader(colCount: _colCount(constraints)),
+                  const PokeDexPokemonLoadMore()
+                ],
+              );
+            }),
           ),
         ),
       );

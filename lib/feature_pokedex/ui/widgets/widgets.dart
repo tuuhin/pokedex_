@@ -10,3 +10,5 @@ export './detailed/tabs/details_tab.dart';
 export './detailed/tabs/pokemon_evolution_tab.dart';
 export './detailed/tabs/pokemon_moves_tab.dart';
 export './detailed/tabs/pokemon_stats_tab.dart';
+export 'detailed/widgets/evolution_data.dart';
+export './detailed/widgets/species_data.dart';

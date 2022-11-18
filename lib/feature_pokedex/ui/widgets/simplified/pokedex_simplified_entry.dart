@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../context/providers.dart';
 import '../../../domain/models/pokedex_model.dart';
 import 'pokedex_simplified_card.dart';
 
-class PokedexSimplifiedEntry extends StatefulWidget {
+class PokedexSimplifiedEntry extends ConsumerStatefulWidget {
   final PokedexPokemonModel model;
   const PokedexSimplifiedEntry({
     super.key,
@@ -11,10 +13,11 @@ class PokedexSimplifiedEntry extends StatefulWidget {
   });
 
   @override
-  State<PokedexSimplifiedEntry> createState() => _PokedexSimplifiedEntryState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _PokedexSimplifiedEntryState();
 }
 
-class _PokedexSimplifiedEntryState extends State<PokedexSimplifiedEntry>
+class _PokedexSimplifiedEntryState extends ConsumerState<PokedexSimplifiedEntry>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
@@ -42,21 +45,18 @@ class _PokedexSimplifiedEntryState extends State<PokedexSimplifiedEntry>
     super.dispose();
   }
 
-  void _showDetails() =>
-      context.push('/pokedex-detailed/${widget.model.simple.pokemonId}',
-          extra: widget.model);
+  void _showDetails() {
+    ref.read(currentDetailedPokemon).setPokemon(widget.model);
+    context.push('/pokedex-detailed/${widget.model.simple.pokemonId}',
+        extra: widget.model);
+  }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _controller,
-      builder: (context, child) {
-        return ScaleTransition(
-          scale: _scale,
-          alignment: Alignment.center,
-          child: child,
-        );
-      },
+      builder: (context, child) => ScaleTransition(
+          scale: _scale, alignment: Alignment.center, child: child),
       child: InkWell(
           onTap: _showDetails,
           child: PokedexSimplifiedCard(model: widget.model.simple)),

@@ -60,7 +60,7 @@ class _PokemonDetailsTabState extends State<PokemonDetailsTab>
                 child: TabBarView(controller: _tabController, children: [
                   PokemonAboutTab(),
                   PokemonStatsTab(stats: widget.model.stats),
-                  PokemonEvolutionTab(),
+                  PokemonEvolutionTab(pokemonId: widget.model.id),
                   PokemonMovesTab(moves: widget.model.moves)
                 ]),
               ),

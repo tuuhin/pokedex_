@@ -4,7 +4,10 @@ import '../widgets/animated_stats_bar.dart';
 
 class PokemonStatsTab extends StatelessWidget {
   final List<BaseStatsModel> stats;
-  const PokemonStatsTab({Key? key, required this.stats}) : super(key: key);
+  const PokemonStatsTab({
+    Key? key,
+    required this.stats,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -18,21 +21,22 @@ class PokemonStatsTab extends StatelessWidget {
             ...stats
                 .map(
                   (e) => AnimatedStatsBar(
-                    limit: 100,
-                    statsModel: e,
-                    progressbarColor:
-                        e.baseStat > 50 ? Colors.blueAccent : Colors.redAccent,
-                  ),
+                      limit: 100,
+                      statsModel: e,
+                      progressbarColor: e.baseStat > 50
+                          ? Colors.blueAccent
+                          : Colors.redAccent),
                 )
                 .toList(),
             AnimatedStatsBar(
-                statsModel: stats.fold<BaseStatsModel>(
-                    BaseStatsModel(name: "Total", baseStat: 0, effort: 0),
-                    (previousValue, element) => previousValue.copyWith(
-                        baseStat: previousValue.baseStat + element.baseStat,
-                        effort: previousValue.effort + element.effort)),
-                progressbarColor: Colors.red,
-                limit: stats.length * 100)
+              statsModel: stats.fold<BaseStatsModel>(
+                  BaseStatsModel(name: "Total", baseStat: 0, effort: 0),
+                  (previousValue, element) => previousValue.copyWith(
+                      baseStat: previousValue.baseStat + element.baseStat,
+                      effort: previousValue.effort + element.effort)),
+              progressbarColor: Colors.red,
+              limit: stats.length * 100,
+            )
           ],
         ),
       );
