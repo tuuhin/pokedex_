@@ -20,7 +20,7 @@ class PokedexPokemonRepoImpl implements PokedexPokemonRepository {
   @override
   Future<List<PokedexPokemonModel>> getPokemonInfo(
       List<BaseResponseResults> results) async {
-    Iterable<int> ids = results.map((e) => getIdFromString(e.url) ?? 1);
+    Iterable<int> ids = results.map((e) => getIdFromString(e.url));
     Iterable<PokedexPokemonDto> pokemons = await Future.wait(
         ids.map((id) => clt.getPokemonDetailedById(id: id)),
         eagerError: true);
