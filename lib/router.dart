@@ -1,16 +1,15 @@
-import 'package:flutter_pokedex/core/widget/error/router_error.dart';
-import 'package:flutter_pokedex/feature_pokedex/domain/models/models.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'app/app.dart';
+import 'core/widget/error/router_error.dart';
 import 'feature_poke_ability/ui/pokemon_ability.dart';
 import 'feature_poke_item/ui/pokeomn_items.dart';
 import 'feature_poke_location/ui/pokeomn_locations.dart';
 import 'feature_poke_moves/ui/pokemon_moves.dart';
 import 'feature_poke_news/ui/show_poke_news.dart';
 import 'feature_pokedex/ui/pokedex_base.dart';
-import 'feature_pokedex/ui/pokedex_detailed.dart';
+import 'feature_pokedex/ui/widgets/widgets.dart';
 import 'feature_type_charts/ui/pokemon_type_charts.dart';
 
 final GoRouter router = GoRouter(
@@ -27,12 +26,8 @@ final GoRouter router = GoRouter(
     GoRoute(
         path: '/pokedex-detailed/:idx',
         builder: (context, state) {
-          int pokemonId = int.tryParse(state.params["idx"] as String) ?? 0;
-          PokedexPokemonModel pokemonModel = state.extra as PokedexPokemonModel;
-          return PokedexDetailed(
-            pokemonId: pokemonId,
-            model: pokemonModel,
-          );
+          int pokemonId = int.tryParse(state.params["idx"] as String) ?? 1;
+          return PokedexDetailedLoader(pokemonId: pokemonId);
         }),
     GoRoute(
       path: '/type',

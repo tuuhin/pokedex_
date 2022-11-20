@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/feature_pokedex/domain/models/models.dart';
-import 'package:flutter_pokedex/feature_pokedex/ui/widgets/widgets.dart';
+
+import '../../../../domain/models/models.dart';
+import '../../widgets.dart';
 
 class PokemonDetailsTab extends StatefulWidget {
   final PokedexPokemonModel model;
@@ -58,8 +59,8 @@ class _PokemonDetailsTabState extends State<PokemonDetailsTab>
               ),
               Expanded(
                 child: TabBarView(controller: _tabController, children: [
-                  PokemonAboutTab(),
-                  PokemonStatsTab(stats: widget.model.stats),
+                  PokemonAboutTab(pokeId: widget.model.id),
+                  PokemonStatsTab(pokeId: widget.model.id),
                   PokemonEvolutionTab(pokemonId: widget.model.id),
                   PokemonMovesTab(moves: widget.model.moves)
                 ]),
