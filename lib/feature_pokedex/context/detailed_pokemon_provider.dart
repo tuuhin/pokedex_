@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/feature_pokedex/domain/models/models.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../domain/models/models.dart';
+import '../domain/repository/pokedex_pokemon_repo.dart';
 
 // class DetailedPokemonNotifier extends StateNotifier<PokedexPokemonModel> {
 //   final PokedexPokemonModel pokemon;
@@ -8,13 +10,27 @@ import 'package:flutter_pokedex/feature_pokedex/domain/models/models.dart';
 //   PokedexPokemonModel get currentPokemon => state;
 // }
 
-class DetailedPokemonNotifier extends ChangeNotifier {
-  late PokedexPokemonModel pokemon;
+class DetailedPokedexPokemonNotifier
+    extends StateNotifier<AsyncValue<PokedexPokemonModel>> {
+  final PokedexPokemonRepository _repository;
+  DetailedPokedexPokemonNotifier(this._repository)
+      : super(const AsyncValue.loading());
 
-  void setPokemon(PokedexPokemonModel newPokemon) {
-    pokemon = newPokemon;
-    notifyListeners();
+  void _getPokemonDetailsNetwork(int id) async {
+    try {
+      state = AsyncValue.data(await _repository.getPokemonDetailed(id));
+    } catch (e, stk) {
+      state = AsyncValue.error(e, stk);
+    }
   }
 
-  PokedexPokemonModel getPokemon() => pokemon;
+  void getPokemonDetailsData(int pokeId, List<PokedexPokemonModel> pokemons) {
+    List<PokedexPokemonModel> preFetchedPokemons =
+        pokemons.where((element) => element.id == pokeId).toList();
+    if (preFetchedPokemons.isNotEmpty) {
+      state = AsyncValue.data(preFetchedPokemons.first);
+    } else {
+      _getPokemonDetailsNetwork(pokeId);
+    }
+  }
 }

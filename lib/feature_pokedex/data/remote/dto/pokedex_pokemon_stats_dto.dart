@@ -1,3 +1,4 @@
+import 'package:flutter_pokedex/core/util/utlis.dart';
 import 'package:flutter_pokedex/feature_pokedex/domain/models/base_stats_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -10,9 +11,9 @@ class PokedexPokemonStatsDto {
   @JsonKey(name: "stat")
   final BaseResponseResultsDto stat;
   @JsonKey(name: "effort")
-  final int effort;
+  final double effort;
   @JsonKey(name: "base_stat")
-  final int baseStat;
+  final double baseStat;
 
   PokedexPokemonStatsDto(
       {required this.stat, required this.effort, required this.baseStat});
@@ -21,6 +22,6 @@ class PokedexPokemonStatsDto {
 
   Map<String, dynamic> toJson() => _$PokedexPokemonStatsDtoToJson(this);
 
-  BaseStatsModel toModel() =>
-      BaseStatsModel(name: stat.name, baseStat: baseStat, effort: effort);
+  BaseStatsModel toModel() => BaseStatsModel(
+      name: stat.name.simpleName(), baseStat: baseStat, effort: effort);
 }

@@ -53,5 +53,14 @@ final pokemonSpeciesProvider =
 //   },
 // );
 
-final currentDetailedPokemon =
-    Provider<DetailedPokemonNotifier>((ref) => DetailedPokemonNotifier());
+final currentSelectedPokemon = StateNotifierProvider.autoDispose.family<
+    DetailedPokedexPokemonNotifier,
+    AsyncValue<PokedexPokemonModel>,
+    int>((ref, model) {
+  ref.keepAlive();
+  List<PokedexPokemonModel> pokemons =
+      ref.read(pokedexPokemonProvider.notifier).pokemons;
+
+  return DetailedPokedexPokemonNotifier(ref.read(pokedexSimplifiedRepoProvider))
+    ..getPokemonDetailsData(model, pokemons);
+});

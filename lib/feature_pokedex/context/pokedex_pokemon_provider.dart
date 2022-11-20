@@ -19,6 +19,8 @@ class PokedexPokemonNotifier
 
   final List<PokedexPokemonModel> _pokemons = [];
 
+  List<PokedexPokemonModel> get pokemons => _pokemons;
+
   final GlobalKey<SliverAnimatedListState> _stateKey =
       GlobalKey<SliverAnimatedListState>();
 

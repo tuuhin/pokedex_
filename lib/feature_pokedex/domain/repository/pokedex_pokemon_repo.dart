@@ -6,4 +6,5 @@ abstract class PokedexPokemonRepository {
   Future<PokemonBaseResponse> getPokemons({int? offset, int? limit});
   Future<List<PokedexPokemonModel>> getPokemonInfo(
       List<BaseResponseResults> results);
+  Future<PokedexPokemonModel> getPokemonDetailed(int id);
 }

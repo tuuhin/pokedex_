@@ -1,3 +1,4 @@
+import 'package:flutter_pokedex/core/util/utlis.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/data/base_dto/base_dto.dart';
@@ -23,7 +24,7 @@ class PokedexPokemonMove {
   Map<String, dynamic> toJson() => _$PokedexPokemonMoveToJson(this);
 
   PokedexMoveModel toModel() => PokedexMoveModel(
-      moveName: move.name,
+      moveName: move.name.removeDash().toTitleCase(),
       learnedAt: details.map((e) => e.levelLearnedAt).toList(),
       moveLearnMethod: details.map((e) => e.moveLearnedMethod.name).toList());
 }

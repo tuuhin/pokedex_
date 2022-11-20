@@ -73,11 +73,12 @@ class PokemonSpeciesDto {
       baseHappiness: baseHappiness,
       captureRate: captureRate,
       eggGroups: eggGroups.map((e) => e.name.toTitleCase()),
-      evolutionChain: evolutionChain.url,
+      evolutionChainId: getIdFromString(evolutionChain.url),
       flavorTextEntries: flavorTextEntries
           .where((element) => element.language.name == 'en')
           .map((e) => e.toModel())
-          .toSet(),
+          .toSet()
+          .toList(),
       maleCount: (genderRate / 8) * 100,
       femaleCount: (1 - genderRate / 8) * 100,
       growthRate: growthRate.name,

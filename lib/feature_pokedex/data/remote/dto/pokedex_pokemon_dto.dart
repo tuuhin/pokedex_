@@ -1,8 +1,7 @@
-import 'package:flutter_pokedex/feature_pokedex/domain/models/pokedex_model.dart';
+import 'package:flutter_pokedex/core/util/utlis.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../../core/util/string_helper.dart';
-import '../../../domain/models/pokemon_simplified_model.dart';
+import '../../../domain/models/models.dart';
 import '../remote.dart';
 
 part 'pokedex_pokemon_dto.g.dart';
@@ -65,9 +64,15 @@ class PokedexPokemonDto {
       );
 
   PokedexPokemonModel toModel() => PokedexPokemonModel(
+        id: id,
+        baseXP: baseXp,
         stats: stats.map((e) => e.toModel()).toList(),
         moves: moves.map((e) => e.toModel()).toList(),
+        abilities:
+            abilities.map((e) => e.pokemon.name.removeDash().toTitleCase()),
         simple: toSimpleModel(),
         isDefault: isDefault,
+        height: height,
+        weight: weight,
       );
 }

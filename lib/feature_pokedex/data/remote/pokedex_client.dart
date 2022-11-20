@@ -34,7 +34,7 @@ abstract class PokedexClient {
   });
 
   @GET("evolution-chain/{id}")
-  Future<EvolutionChainDetailsDto> getEvoltuinChainDetailed({
+  Future<EvolutionChainDetailsDto> getEvolutionChainDetailed({
     @Path("id") required id,
   });
 
