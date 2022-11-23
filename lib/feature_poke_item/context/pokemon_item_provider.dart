@@ -33,6 +33,8 @@ class PokemonItemNotifier
 
   void fetchMore() => _fetchMoreItems();
 
+  void refresh() => _fetchSomeItems();
+
   void _fetchSomeItems() async {
     try {
       PokemonBaseResponse base = await _repo.getItems();

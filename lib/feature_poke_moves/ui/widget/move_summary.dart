@@ -18,33 +18,38 @@ class MoveSummary extends StatelessWidget {
           TextSpan(
             children: [
               TextSpan(
-                  text: 'Flavour: ', style: TextStyle(color: secondaryColor)),
-              TextSpan(text: details.flavourText.first.text)
+                  text: 'Flavour: ',
+                  style: TextStyle(
+                      color: secondaryColor, fontWeight: FontWeight.w600)),
+              TextSpan(
+                text: details.flavourText.first.text,
+              )
             ],
           ),
         ),
+        const SizedBox(height: 2),
         Text.rich(
           TextSpan(
             children: [
               TextSpan(
                   text: 'Effect: ',
                   style: TextStyle(
-                    color: secondaryColor,
-                  )),
+                      color: secondaryColor, fontWeight: FontWeight.w600)),
               TextSpan(
-                  text: details.effect.first.effect,
-                  style: const TextStyle(overflow: TextOverflow.ellipsis))
+                text: details.effect.first.effect,
+                style: const TextStyle(overflow: TextOverflow.ellipsis),
+              )
             ],
           ),
         ),
+        const SizedBox(height: 2),
         Text.rich(
           TextSpan(
             children: [
               TextSpan(
                   text: 'Damage Class: ',
                   style: TextStyle(
-                    color: secondaryColor,
-                  )),
+                      color: secondaryColor, fontWeight: FontWeight.w600)),
               TextSpan(
                   text: details.damageClass,
                   style: const TextStyle(overflow: TextOverflow.ellipsis))

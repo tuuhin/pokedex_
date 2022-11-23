@@ -35,6 +35,8 @@ class PokemonAbilityNotifier
 
   void fetchMore() => _fetchMoreAbility();
 
+  void refresh() => _fetchSomeAbility();
+
   void _fetchSomeAbility() async {
     try {
       PokemonBaseResponse base = await _pokemonAbilityRespository.getAbility();

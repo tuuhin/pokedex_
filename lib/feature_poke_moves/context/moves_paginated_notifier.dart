@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_pokedex/core/util/string_helper.dart';
-import 'package:flutter_pokedex/main.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/models/base_response_model.dart';
 import '../../core/util/paginator/paginator.dart';
+import '../../core/util/utlis.dart';
 import '../domain/domain.dart';
 
 class PokemonMovesPaginatedNotifier
@@ -27,6 +25,8 @@ class PokemonMovesPaginatedNotifier
   String? _nextURL;
   int _offset = 0;
 
+  void refresh() => _fetchSomeMoves();
+
   void init() => _moves.isEmpty ? _fetchSomeMoves() : _fetchMoreMoves();
 
   void requestMore() => _fetchMoreMoves();
@@ -45,17 +45,14 @@ class PokemonMovesPaginatedNotifier
       state = Paginator.data(_moves..addAll(movesDetailed));
 
       for (final PokemonMoveDetailed move in movesDetailed) {
-        await Future.delayed(const Duration(milliseconds: 600), () {
-          logger.fine("message adding ${_moves.indexOf(move)}");
-          _stateKey.currentState?.insertItem(_moves.indexOf(move));
-        });
+        await Future.delayed(
+          const Duration(milliseconds: 600),
+          () => _stateKey.currentState?.insertItem(_moves.indexOf(move)),
+        );
       }
-    } on DioError catch (dio, stk) {
-      logger.shout(dio);
-      Paginator.error(dio, stk);
     } catch (e, stk) {
-      logger.shout(e);
-      Paginator.error(e, stk);
+      debugPrintStack(stackTrace: stk);
+      state = Paginator.error(e, stk);
     }
   }
 
@@ -65,7 +62,7 @@ class PokemonMovesPaginatedNotifier
       return;
     }
     if (_limiter.isActive) return;
-    logger.shout("Requesting PokemonNews  move offset:$_offset ");
+
     _limiter = Timer(const Duration(seconds: 2), () {});
     try {
       state = Paginator.loadMore(_moves);
@@ -80,8 +77,12 @@ class PokemonMovesPaginatedNotifier
       state = Paginator.data(_moves..addAll(movesDetailed));
       if (_stateKey.currentState != null) {
         for (final PokemonMoveDetailed move in movesDetailed) {
-          logger.fine("adding ${_moves.indexOf(move)}");
-          _stateKey.currentState?.insertItem(_moves.indexOf(move));
+          await Future.delayed(
+            const Duration(milliseconds: 600),
+            () => _stateKey.currentState?.insertItem(
+              _moves.indexOf(move),
+            ),
+          );
         }
       }
     } catch (e, stk) {

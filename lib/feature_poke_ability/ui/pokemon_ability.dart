@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/util/paginator/paginator.dart';
 import '../../core/widget/blurry_appbar.dart';
 import '../context/provider.dart';
-import '../domain/models/pokemon_ability_model.dart';
 import '../ui/ui.dart';
 
 class PokemonAbilityPage extends ConsumerStatefulWidget {

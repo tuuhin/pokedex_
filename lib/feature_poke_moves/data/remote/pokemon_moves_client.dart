@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_pokedex/core/data/base_dto/base_dto.dart';
 import 'package:retrofit/http.dart';
 
+import '../../../core/data/base_dto/base_dto.dart';
 import './dto/pokemon_moves_dto.dart';
 
 part 'pokemon_moves_client.g.dart';
@@ -10,10 +10,9 @@ part 'pokemon_moves_client.g.dart';
 abstract class PokemonMovesClient {
   factory PokemonMovesClient(Dio dio, {String baseUrl}) = _PokemonMovesClient;
 
-  @GET("/{move_id}")
-  Future<PokemonMovesDetailedDto> getMovesDetails({
-    @Path("move_id") required int id,
-  });
+  @GET("/{id}")
+  Future<PokemonMovesDetailedDto> getMovesDetails(
+      {@Path("id") required int id});
 
   @GET("")
   Future<BaseEndpointDto> getMove({

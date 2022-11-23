@@ -1,3 +1,4 @@
+import 'package:flutter_pokedex/core/util/utlis.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/data/base_dto/base_pokemon_dto.dart';
@@ -52,8 +53,8 @@ class PokemonItemDto {
   Map<String, dynamic> toJson() => _$PokemonItemDtoToJson(this);
 
   PokemonItemModel toModel() => PokemonItemModel(
-      attributes: attrs.map((e) => e.name).toList(),
-      category: category.name,
+      attributes: attrs.map((e) => e.name.removeDash().toTitleCase()).toList(),
+      category: category.name.removeDash(),
       cost: cost,
       fillingEffect: fillingEffect,
       fillingPower: fillingPower,
@@ -62,7 +63,7 @@ class PokemonItemDto {
           .where((element) => element.language.name == 'en')
           .map((e) => e.toModel())
           .toList(),
-      name: name,
+      name: name.removeDash().toTitleCase(),
       imageUrl: sprite.imageUrl);
 }
 

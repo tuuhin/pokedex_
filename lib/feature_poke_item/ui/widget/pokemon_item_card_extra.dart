@@ -56,47 +56,45 @@ class PokemonItemCardExtra extends StatelessWidget {
                 ),
               ],
             ),
-            ...[
-              if (item.fillingEffect != null || item.fillingPower != null)
-                Row(
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Filling Effect: ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle2
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          ),
-                          TextSpan(
-                              text: item.fillingEffect!.toString(),
-                              style: const TextStyle(
-                                  overflow: TextOverflow.ellipsis))
-                        ],
-                      ),
+            if (item.fillingEffect != null || item.fillingPower != null)
+              Row(
+                children: [
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Filling Effect: ',
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle2
+                              ?.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        TextSpan(
+                            text: item.fillingEffect!.toString(),
+                            style: const TextStyle(
+                                overflow: TextOverflow.ellipsis))
+                      ],
                     ),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Filling Power: ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle2
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          ),
-                          TextSpan(
-                              text: item.fillingPower!.toString(),
-                              style: const TextStyle(
-                                  overflow: TextOverflow.ellipsis))
-                        ],
-                      ),
+                  ),
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Filling Power: ',
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle2
+                              ?.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        TextSpan(
+                            text: item.fillingPower!.toString(),
+                            style: const TextStyle(
+                                overflow: TextOverflow.ellipsis))
+                      ],
                     ),
-                  ],
-                )
-            ]
+                  ),
+                ],
+              )
           ],
         ),
       ),

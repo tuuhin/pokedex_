@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/core/util/utlis.dart';
 
 import '../../domain/models/pokemon_item_model.dart';
 
@@ -24,7 +25,7 @@ class PokemonItemCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(item.name,
+                Text(item.name.removeDash().toTitleCase(),
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1
@@ -37,46 +38,40 @@ class PokemonItemCard extends StatelessWidget {
               ],
             ),
             const Divider(),
-            ...[
-              if (item.effects.isNotEmpty)
-                Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                          text: 'Effect: ',
-                          style:
-                              Theme.of(context).textTheme.subtitle1?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                  )),
-                      TextSpan(
-                          text: item.effects.first.effect,
-                          style: const TextStyle(
-                            overflow: TextOverflow.ellipsis,
-                          ))
-                    ],
-                  ),
+            if (item.effects.isNotEmpty)
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                        text: 'Effect: ',
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            )),
+                    TextSpan(
+                        text: item.effects.first.effect,
+                        style: const TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                        ))
+                  ],
                 ),
-            ],
-            ...[
-              if (item.flavorEntries.isNotEmpty)
-                Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Flavor Text: ',
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            ?.copyWith(fontWeight: FontWeight.w600),
-                      ),
-                      TextSpan(
-                          text: item.flavorEntries.first.text,
-                          style:
-                              const TextStyle(overflow: TextOverflow.ellipsis))
-                    ],
-                  ),
+              ),
+            if (item.flavorEntries.isNotEmpty)
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Flavor Text: ',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1
+                          ?.copyWith(fontWeight: FontWeight.w600),
+                    ),
+                    TextSpan(
+                        text: item.flavorEntries.first.text,
+                        style: const TextStyle(overflow: TextOverflow.ellipsis))
+                  ],
                 ),
-            ],
+              ),
             PokemonItemCardExtra(item: item),
             Text('Attributes', style: Theme.of(context).textTheme.subtitle1),
             const Divider(),
@@ -89,18 +84,15 @@ class PokemonItemCard extends StatelessWidget {
                           width: 8,
                           height: 8,
                           decoration: const BoxDecoration(
-                              color: Colors.redAccent,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.redAccent,
-                                    offset: Offset.zero,
-                                    blurRadius: 10),
-                                BoxShadow(
-                                    color: Colors.redAccent,
-                                    offset: Offset.zero,
-                                    blurRadius: 5)
-                              ]),
+                            color: Colors.redAccent,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.redAccent,
+                                  offset: Offset.zero,
+                                  blurRadius: 3),
+                            ],
+                          ),
                         ),
                         label: Text(e),
                       ))

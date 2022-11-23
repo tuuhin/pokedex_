@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/core/widget/blurry_appbar.dart';
 import 'package:flutter_pokedex/feature_poke_item/context/providers.dart';
 import 'package:flutter_pokedex/feature_poke_item/ui/widget/pokemon_items_loader.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -56,18 +57,19 @@ class _PokemonItemsState extends ConsumerState<PokemonItems> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Scrollbar(
-        controller: _controller,
-        child: CustomScrollView(
+      body: SafeArea(
+        child: Scrollbar(
           controller: _controller,
-          slivers: const [
-            SliverAppBar(
-              title: Text('PokemonItems'),
-              floating: true,
-            ),
-            PokemonItemsLoader(),
-            PokemonItemLoadMore()
-          ],
+          child: CustomScrollView(
+            controller: _controller,
+            slivers: [
+              const SliverAppBar(),
+              SliverPersistentHeader(
+                  floating: true, delegate: BlurryAppBar(title: 'Items')),
+              const PokemonItemsLoader(),
+              const PokemonItemLoadMore()
+            ],
+          ),
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:flutter_pokedex/core/util/utlis.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/data/base_dto/base_dto.dart';
@@ -41,7 +42,7 @@ class PokemonAbilityDto {
 
   PokemonAbility toModel() => PokemonAbility(
         id: id,
-        name: name,
+        name: name.removeDash().toTitleCase(),
         pokemon: pokemonWithAbility.map((e) => e.toModel()).toList(),
         flavourText: flavourTextEntries
             .where((element) => element.language.name == 'en')

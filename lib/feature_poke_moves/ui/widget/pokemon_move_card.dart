@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/data/pokemon_type/pokemon_type.dart';
 import '../../../core/util/string_helper.dart';
@@ -79,7 +78,7 @@ class PokeMonMoveCard extends ConsumerWidget {
               ],
             ),
             PokemonMoveStats(details: details),
-            Text('Learned by:',
+            Text('Learned by: (${details.learnedByPokemon.length})',
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                     color: pokemonType.secondaryColor,
                     fontWeight: FontWeight.w600)),

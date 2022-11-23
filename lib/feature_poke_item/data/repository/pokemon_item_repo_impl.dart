@@ -21,7 +21,7 @@ class PokemonItemRepositoryImpl implements PokemonItemRepository {
   @override
   Future<List<PokemonItemModel>> getItemsDetails(
       List<BaseResponseResults> results) async {
-    Iterable<int> ids = results.map((e) => getIdFromString(e.url) ?? 1);
+    Iterable<int> ids = results.map((e) => getIdFromString(e.url));
     Iterable<PokemonItemDto> items = await Future.wait(
         ids.map((id) => _client.getItemDetailed(id: id)),
         eagerError: true);

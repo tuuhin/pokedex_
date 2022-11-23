@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/util/paginator/paginator.dart';
-import '../../../core/widget/transitions.dart';
+import '../../../core/widget/core_widgets.dart';
 import '../../context/provider.dart';
 import '../../domain/models/pokemon_ability_model.dart';
 import '../ui.dart';
@@ -17,49 +17,17 @@ class PokemonAbilityLoader extends ConsumerWidget {
             .watch<Paginator<List<PokemonAbility>>>(pokemonAbilityProvider)
             .when(
               loading: () => const SliverFillRemaining(
-                child: Center(child: Text('loading')),
-              ),
-              loadMore: (data) => SliverAnimatedList(
-                key: ref.read(pokemonAbilityProvider.notifier).key,
-                itemBuilder: (context, index, animation) => LoadTransition(
-                  animation: animation,
-                  child: PokemonAbilityCard(
-                    ability: data[index],
-                  ),
-                ),
-              ),
-              data: (data) => SliverAnimatedList(
-                key: ref.read(pokemonAbilityProvider.notifier).key,
-                itemBuilder: (context, index, animation) => LoadTransition(
-                  animation: animation,
-                  child: PokemonAbilityCard(
-                    ability: data[index],
-                  ),
-                ),
-              ),
+                  child: LoadingInfo(
+                      text: "Fecthing Ability", color: Color(0xffffce4b))),
+              loadMore: (data) => PokemonAbilityList(ability: data),
+              data: (data) => PokemonAbilityList(ability: data),
               error: (err, stk) => SliverFillRemaining(
-                child: Center(
-                  child: Text(err.toString()),
-                ),
-              ),
-              errorLoadMore: (data, err, stk) => SliverAnimatedList(
-                key: ref.read(pokemonAbilityProvider.notifier).key,
-                itemBuilder: (context, index, animation) => LoadTransition(
-                  animation: animation,
-                  child: PokemonAbilityCard(
-                    ability: data[index],
-                  ),
-                ),
-              ),
-              end: (message, data) => SliverAnimatedList(
-                key: ref.read(pokemonAbilityProvider.notifier).key,
-                itemBuilder: (context, index, animation) => LoadTransition(
-                  animation: animation,
-                  child: PokemonAbilityCard(
-                    ability: data[index],
-                  ),
-                ),
-              ),
+                  child: PaginatorErrorWidget(
+                      refresh:
+                          ref.read(pokemonAbilityProvider.notifier).refresh)),
+              errorLoadMore: (data, err, stk) =>
+                  PokemonAbilityList(ability: data),
+              end: (message, data) => PokemonAbilityList(ability: data),
             ),
       );
 }

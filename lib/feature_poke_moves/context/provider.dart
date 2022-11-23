@@ -1,12 +1,17 @@
-import 'package:flutter_pokedex/feature_poke_moves/context/moves_paginated_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/util/dio_client.dart';
 import '../../core/util/paginator/paginator.dart';
-import '../data/repository/repository.dart';
+import '../data/remote/pokemon_moves_client.dart';
+import '../data/repository/pokemon_moves_repositoy_impl.dart';
 import '../domain/domain.dart';
+import './moves_paginated_notifier.dart';
+
+final apiClient =
+    Provider<PokemonMovesClient>((ref) => PokemonMovesClient(dio));
 
 final pokemonMoveRespositoryProvider = Provider<PokemonMoveRespository>(
-  (ref) => PokemonMovesRespositoryImpl(),
+  (ref) => PokemonMovesRespositoryImpl(ref.read(apiClient)),
 );
 
 final pokeMovesProvider = StateNotifierProvider<PokemonMovesPaginatedNotifier,
