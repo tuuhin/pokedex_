@@ -31,44 +31,50 @@ class _PokemonDetailsTabState extends State<PokemonDetailsTab>
 
   @override
   Widget build(BuildContext context) {
-    return SliverFillRemaining(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(30),
-            topLeft: Radius.circular(30),
-          ),
-          color: Theme.of(context).scaffoldBackgroundColor,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              TabBar(
-                splashBorderRadius: BorderRadius.circular(40),
-                padding: EdgeInsets.zero,
-                indicatorSize: TabBarIndicatorSize.label,
-                unselectedLabelColor: Colors.grey,
-                unselectedLabelStyle: const TextStyle(color: Colors.black26),
-                controller: _tabController,
-                tabs: _tabNames
-                    .map((value) =>
-                        Tab(text: value, iconMargin: EdgeInsets.zero))
-                    .toList(),
+    final double size = MediaQuery.of(context).size.height;
+    return SliverFillViewport(
+        padEnds: false,
+        viewportFraction: (size - 85) / size,
+        delegate: SliverChildListDelegate.fixed([
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(30),
+                topLeft: Radius.circular(30),
               ),
-              Expanded(
-                child: TabBarView(controller: _tabController, children: [
-                  PokemonAboutTab(pokeId: widget.model.id),
-                  PokemonStatsTab(pokeId: widget.model.id),
-                  PokemonEvolutionTab(pokemonId: widget.model.id),
-                  PokemonMovesTab(moves: widget.model.moves)
-                ]),
-              ),
-            ],
+              color: Theme.of(context).scaffoldBackgroundColor,
+            ),
+            child: Column(
+              children: [
+                TabBar(
+                  padding: const EdgeInsets.all(8.0),
+                  splashBorderRadius: BorderRadius.circular(40),
+                  indicatorSize: TabBarIndicatorSize.label,
+                  unselectedLabelColor: Colors.grey,
+                  unselectedLabelStyle: const TextStyle(color: Colors.black26),
+                  controller: _tabController,
+                  tabs: _tabNames
+                      .map((value) =>
+                          Tab(text: value, iconMargin: EdgeInsets.zero))
+                      .toList(),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        PokemonAboutTab(pokeId: widget.model.id),
+                        PokemonStatsTab(pokeId: widget.model.id),
+                        PokemonEvolutionTab(pokemonId: widget.model.id),
+                        PokemonMovesTab(moves: widget.model.moves)
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-    );
+        ]));
   }
 }
