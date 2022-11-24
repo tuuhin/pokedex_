@@ -34,6 +34,8 @@ class PokedexPokemonNotifier
 
   void requestMore() => _fetchMore();
 
+  void refresh() => _fetchSome();
+
   void _fetchSome() async {
     try {
       PokemonBaseResponse response =
@@ -45,6 +47,8 @@ class PokedexPokemonNotifier
 
       List<PokedexPokemonModel> pokemons =
           await _repository.getPokemonInfo(response.results);
+
+      pokemons.removeWhere((element) => element.isDefault == false);
 
       state = Paginator.data(_pokemons..addAll(pokemons));
 
@@ -85,6 +89,8 @@ class PokedexPokemonNotifier
       List<PokedexPokemonModel> pokemons =
           await _repository.getPokemonInfo(response.results);
 
+      pokemons.removeWhere((element) => element.isDefault == false);
+
       state = Paginator.data(_pokemons..addAll(pokemons));
 
       for (final PokedexPokemonModel pokemon in pokemons) {
@@ -98,6 +104,7 @@ class PokedexPokemonNotifier
     } on DioError catch (dio, stk) {
       state = Paginator.errorLoadMore(_pokemons, dio, stk);
     } catch (e, stk) {
+      debugPrintStack(stackTrace: stk);
       state = Paginator.errorLoadMore(_pokemons, e, stk);
     }
   }

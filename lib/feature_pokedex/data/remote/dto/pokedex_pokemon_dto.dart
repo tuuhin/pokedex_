@@ -57,7 +57,7 @@ class PokedexPokemonDto {
 
   PokedexPokemonSimplifiedModel toSimpleModel() =>
       PokedexPokemonSimplifiedModel(
-        name: name,
+        name: name.removeDash().toTitleCase(),
         pokemonId: id,
         imageUrl: sprites.others.officialArtworkSprites.frontDefault,
         types: types.map((e) => e.pokemon.name).toList(),
