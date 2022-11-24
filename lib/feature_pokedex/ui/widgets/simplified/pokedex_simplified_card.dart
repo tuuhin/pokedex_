@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/core/util/string_helper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../../core/data/pokemon_type/pokemon_type.dart';
 import '../../../domain/models/pokemon_simplified_model.dart';
@@ -18,36 +18,50 @@ class PokedexSimplifiedCard extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-          color: pokemonType.primaryColor,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-                color: pokemonType.secondaryColor.withOpacity(0.4),
-                offset: const Offset(0, 5),
-                blurRadius: 5,
-                spreadRadius: 2)
-          ]),
+        color: pokemonType.primaryColor,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+              color: pokemonType.secondaryColor.withOpacity(0.6),
+              offset: const Offset(0, 5),
+              blurRadius: 8,
+              spreadRadius: 2)
+        ],
+      ),
       child: Stack(
         alignment: Alignment.bottomRight,
         children: [
           Positioned(
+            left: 0,
+            child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                child: Text(decoratedId(model.pokemonId),
+                    style: const TextStyle(
+                        color: Colors.white70,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16))),
+          ),
+          Positioned(
             bottom: -10,
             right: -10,
-            child: Image.asset(
-              "assets/icons/poke_ball.png",
-              color: Colors.white24,
-              scale: 8,
-            ),
+            child: Image.asset("assets/icons/poke_ball.png",
+                color: Colors.white24, scale: 8),
           ),
-          CachedNetworkImage(
-            imageUrl: model.imageUrl,
-            height: size.height * .125,
-            errorWidget: (context, url, error) => const SizedBox.shrink(),
-            placeholder: (context, url) => Container(
-              decoration: BoxDecoration(
-                color: pokemonType.secondaryColor.withOpacity(0.5),
-                border: Border.all(color: pokemonType.secondaryColor),
-                borderRadius: BorderRadius.circular(10),
+          Hero(
+            tag: model.imageUrl,
+            child: CachedNetworkImage(
+              filterQuality: FilterQuality.low,
+              imageUrl: model.imageUrl,
+              height: size.height * .125,
+              width: size.height * .125,
+              errorWidget: (context, url, error) => const SizedBox.shrink(),
+              placeholder: (context, url) => Container(
+                decoration: BoxDecoration(
+                  color: pokemonType.secondaryColor.withOpacity(0.5),
+                  border: Border.all(color: pokemonType.secondaryColor),
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
             ),
           ),
@@ -71,11 +85,12 @@ class PokedexSimplifiedCard extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 10),
                             decoration: BoxDecoration(
-                              color: Colors.black12,
+                              color:
+                                  pokemonType.secondaryColor.withOpacity(0.4),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Text(
-                              type,
+                              type.toTitleCase(),
                               style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white54),

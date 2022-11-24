@@ -13,5 +13,12 @@ export './detailed/tabs/details_tab.dart';
 export './detailed/tabs/pokemon_evolution_tab.dart';
 export './detailed/tabs/pokemon_moves_tab.dart';
 export './detailed/tabs/pokemon_stats_tab.dart';
-export 'detailed/widgets/evolution_data.dart';
+
+export './detailed/widgets/evolution_data.dart';
 export './detailed/widgets/species_data.dart';
+export './detailed/widgets/animated_stats_bar.dart';
+export './detailed/widgets/evolution_cards.dart';
+export './detailed/widgets/pokedex_move_tile.dart';
+export './detailed/widgets/pokemon_breading_data.dart';
+export './detailed/widgets/pokemon_details_header.dart';
+export './detailed/widgets/rotating_flex_pokeball.dart';

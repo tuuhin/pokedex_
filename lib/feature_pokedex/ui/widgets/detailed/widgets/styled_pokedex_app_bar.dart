@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/core/util/utlis.dart';
-import 'package:flutter_pokedex/feature_pokedex/domain/models/models.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../domain/models/models.dart';
 import 'rotating_flex_pokeball.dart';
 
 class StyledPokedexAppBar extends SliverPersistentHeaderDelegate {
@@ -30,6 +31,7 @@ class StyledPokedexAppBar extends SliverPersistentHeaderDelegate {
               ),
             ),
             AnimatedPositioned(
+              curve: Curves.easeInOut,
               duration: const Duration(milliseconds: 500),
               left: shrinkOffset <= height * 0.4 ? 15 : null,
               top: shrinkOffset <= height * 0.4 ? 80 : kTextTabBarHeight - 10,

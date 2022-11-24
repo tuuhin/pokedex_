@@ -46,9 +46,8 @@ class _PokedexSimplifiedEntryState extends ConsumerState<PokedexSimplifiedEntry>
   }
 
   void _showDetails() {
-    ref.read(currentDetailedPokemon).setPokemon(widget.model);
-    context.push('/pokedex-detailed/${widget.model.simple.pokemonId}',
-        extra: widget.model);
+    ref.read(currentSelectedPokemon(widget.model.id));
+    context.push('/pokedex-detailed/${widget.model.simple.pokemonId}');
   }
 
   @override
@@ -57,7 +56,7 @@ class _PokedexSimplifiedEntryState extends ConsumerState<PokedexSimplifiedEntry>
       animation: _controller,
       builder: (context, child) => ScaleTransition(
           scale: _scale, alignment: Alignment.center, child: child),
-      child: InkWell(
+      child: GestureDetector(
           onTap: _showDetails,
           child: PokedexSimplifiedCard(model: widget.model.simple)),
     );

@@ -10,10 +10,13 @@ class PokemonEvolutionTab extends ConsumerWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) =>
-      ref.watch(evolutionChainProvider(33)).when(
-            data: (data) => PokemonEvolutionData(data: data.chain),
-            loading: () => Text("loading"),
-            error: (error, stackTrace) => Text("err"),
-          );
+  Widget build(BuildContext context, WidgetRef ref) {
+    int? evId = ref.read(evolutionIdProvider.notifier).evId;
+    return ref.watch(evolutionChainProvider(evId)).when(
+          data: (data) => PokemonEvolutionData(data: data.chain),
+          loading: () => Text("loading "),
+          error: (error, stackTrace) => Text("err"),
+          absent: (message) => Text(message),
+        );
+  }
 }

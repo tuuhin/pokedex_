@@ -37,31 +37,25 @@ class _PokedexBaseRouteState extends ConsumerState<PokedexBaseRoute> {
     super.dispose();
   }
 
-  int _colCount(BoxConstraints constraints) {
-    if (constraints.maxWidth > 600) {
-      return 6;
-    } else {
-      return 2;
-    }
-  }
-
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: Scrollbar(
-          controller: _controller,
-          child: SafeArea(
-            child: LayoutBuilder(builder: (context, constraints) {
-              return CustomScrollView(
+        body: Title(
+          title: 'PokeDex',
+          color: const Color(0xff4fc1a6),
+          child: Scrollbar(
+            controller: _controller,
+            child: SafeArea(
+              child: CustomScrollView(
                 controller: _controller,
                 slivers: [
                   const SliverAppBar(),
                   SliverPersistentHeader(
                       floating: true, delegate: BlurryAppBar(title: "Pokemon")),
-                  PokeDexPokemonLoader(colCount: _colCount(constraints)),
+                  const PokeDexPokemonLoader(),
                   const PokeDexPokemonLoadMore()
                 ],
-              );
-            }),
+              ),
+            ),
           ),
         ),
       );

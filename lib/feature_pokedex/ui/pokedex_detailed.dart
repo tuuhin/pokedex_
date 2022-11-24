@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/core/util/string_helper.dart';
-import 'package:flutter_pokedex/feature_pokedex/domain/models/models.dart';
 import 'package:vector_math/vector_math_64.dart' show radians;
 
 import '../../core/data/pokemon_type/pokemon_type.dart';
+import '../domain/models/models.dart';
 import 'widgets/detailed/widgets/styled_pokedex_app_bar.dart';
 import 'widgets/widgets.dart';
 
@@ -25,7 +24,8 @@ class PokedexDetailed extends StatelessWidget {
         appBar: AppBar(
             iconTheme: const IconThemeData(color: Colors.white),
             actions: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.favorite_outline)),
+              IconButton(
+                  onPressed: () {}, icon: const Icon(Icons.favorite_outline)),
               const SizedBox(width: 10),
             ]),
         body: Stack(
@@ -58,13 +58,15 @@ class PokedexDetailed extends StatelessWidget {
                 ),
               ),
             ),
-            CustomScrollView(slivers: [
-              SliverPersistentHeader(
-                  pinned: true,
-                  delegate:
-                      StyledPokedexAppBar(data, height: size.height * .5)),
-              PokemonDetailsTab(model: data)
-            ]),
+            CustomScrollView(
+              slivers: [
+                SliverPersistentHeader(
+                    pinned: true,
+                    delegate:
+                        StyledPokedexAppBar(data, height: size.height * .5)),
+                PokemonDetailsTab(model: data)
+              ],
+            ),
           ],
         ),
       ),

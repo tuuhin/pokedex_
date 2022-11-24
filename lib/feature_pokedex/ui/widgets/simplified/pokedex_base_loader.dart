@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/core/widget/core_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../context/providers.dart';
 import '../widgets.dart';
 
 class PokeDexPokemonLoader extends ConsumerWidget {
-  final int colCount;
-  const PokeDexPokemonLoader({super.key, required this.colCount});
+  const PokeDexPokemonLoader({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => SliverPadding(
         padding: const EdgeInsets.all(8.0),
         sliver: ref.watch(pokedexPokemonProvider).when(
             loading: () => const SliverFillRemaining(
-                  child: Center(child: Text('loading')),
-                ),
+                child: LoadingInfo(
+                    text: "Fetching POkemons", color: Color(0xff4fc1a6))),
+            error: (err, stk) => SliverFillRemaining(
+                    child: PaginatorErrorWidget(
+                  refresh: ref.read(pokedexPokemonProvider.notifier).refresh,
+                )),
             loadMore: (data) => PokemonGridEntry(data: data),
             data: (data) => PokemonGridEntry(data: data),
-            error: (err, stk) => const SliverFillRemaining(
-                  child: Center(child: Text('Failed')),
-                ),
             errorLoadMore: (data, err, stk) => PokemonGridEntry(data: data),
             end: (message, data) => PokemonGridEntry(data: data)),
       );

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/feature_pokedex/context/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../core/util/conversion.dart';
 import '../../../../domain/models/models.dart';
 import 'pokemon_breading_data.dart';
 
 class SpeciesData extends ConsumerWidget {
   final PokemonSpeciesModel data;
-  const SpeciesData({Key? key, required this.data}) : super(key: key);
+  final int pokeId;
+  const SpeciesData({Key? key, required this.pokeId, required this.data})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,45 +36,59 @@ class SpeciesData extends ConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Height',
-                      style: Theme.of(context).textTheme.caption?.copyWith(
-                          color: Theme.of(context).textTheme.headline3?.color,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      'Weight',
-                      style: Theme.of(context).textTheme.caption?.copyWith(
-                          color: Theme.of(context).textTheme.headline3?.color,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      'Abilities',
-                      style: Theme.of(context).textTheme.caption?.copyWith(
-                          color: Theme.of(context).textTheme.headline3?.color,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ],
+                Flexible(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Height',
+                        style: Theme.of(context).textTheme.caption?.copyWith(
+                            color: Theme.of(context).textTheme.headline3?.color,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Weight',
+                        style: Theme.of(context).textTheme.caption?.copyWith(
+                            color: Theme.of(context).textTheme.headline3?.color,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Abilities',
+                        style: Theme.of(context).textTheme.caption?.copyWith(
+                            color: Theme.of(context).textTheme.headline3?.color,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 40),
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: [
-                //     Text('${toFeet(model.height)} (${toMeters(model.height)})'),
-                //     const SizedBox(height: 10),
-                //     Text('${toLBS(model.weight)} (${toKg(model.weight)})'),
-                //     const SizedBox(height: 10),
-                //     Row(
-                //         children:
-                //             model.abilities.map((e) => Text('$e, ')).toList())
-                //   ],
-                // )
+                Expanded(
+                  flex: 5,
+                  child: ref.watch(currentSelectedPokemon(pokeId)).maybeWhen(
+                        orElse: () => SizedBox.fromSize(),
+                        data: (data) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                '${toFeet(data.height)} (${toMeters(data.height)})'),
+                            const SizedBox(height: 10),
+                            Text(
+                                '${toLBS(data.weight)} (${toKg(data.weight)})'),
+                            const SizedBox(height: 10),
+                            Wrap(
+                              children: data.abilities
+                                  .map((e) => Text('$e, '))
+                                  .toList(),
+                            )
+                          ],
+                        ),
+                      ),
+                )
               ],
             ),
           ),
