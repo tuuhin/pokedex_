@@ -62,9 +62,7 @@ class _PokemonAbilityPageState extends ConsumerState<PokemonAbilityPage> {
               const SliverAppBar(),
               SliverPersistentHeader(
                 floating: true,
-                delegate: BlurryAppBar(
-                  title: "Abilities",
-                ),
+                delegate: BlurryAppBar(title: "Abilities"),
               ),
               const PokemonAbilityLoader(),
               const PokemonAbilityLoadMore()

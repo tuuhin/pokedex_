@@ -1,4 +1,6 @@
-part of './pokemon_item_card.dart';
+import 'package:flutter/material.dart';
+
+import '../../domain/models/pokemon_item_model.dart';
 
 class PokemonItemCardExtra extends StatelessWidget {
   final PokemonItemModel item;

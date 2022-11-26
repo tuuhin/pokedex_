@@ -14,6 +14,10 @@ class PokemonItemList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) => SliverAnimatedList(
         key: ref.read(pokemonItemProvider.notifier).key,
         itemBuilder: (context, index, animation) => LoadTransition(
-            animation: animation, child: PokemonItemCard(item: data[index])),
+            animation: animation,
+            child: PokemonItemCard(
+              item: data[index],
+              index: index,
+            )),
       );
 }

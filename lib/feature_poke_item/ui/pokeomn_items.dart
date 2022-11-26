@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/core/widget/blurry_appbar.dart';
-import 'package:flutter_pokedex/feature_poke_item/context/providers.dart';
-import 'package:flutter_pokedex/feature_poke_item/ui/widget/pokemon_items_loader.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'widget/pokemon_item_load_more.dart';
+import '../../core/widget/blurry_appbar.dart';
+import '../context/providers.dart';
+import 'widget/widget.dart';
 
 class PokemonItems extends ConsumerStatefulWidget {
   const PokemonItems({super.key});
@@ -24,28 +23,22 @@ class _PokemonItemsState extends ConsumerState<PokemonItems> {
     }
   }
 
+  void _postCallBack(Duration _) async {
+    int itemCount = ref.read(pokemonItemProvider.notifier).itemCount;
+    GlobalKey<SliverAnimatedListState> key =
+        ref.read(pokemonItemProvider.notifier).key;
+    for (var i = 0; i < itemCount; i++) {
+      await Future.delayed(const Duration(milliseconds: 200),
+          () => key.currentState?.insertItem(i));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _controller = ScrollController();
     _controller.addListener(scrollCallback);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) async {
-        int itemCount = ref.read(pokemonItemProvider.notifier).itemCount;
-        GlobalKey<SliverAnimatedListState> key =
-            ref.read(pokemonItemProvider.notifier).key;
-        for (var i = 0; i < itemCount; i++) {
-          await Future.delayed(const Duration(milliseconds: 200),
-              () => key.currentState?.insertItem(i));
-        }
-      },
-    );
+    WidgetsBinding.instance.addPostFrameCallback(_postCallBack);
   }
 
   @override

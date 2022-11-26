@@ -1,9 +1,7 @@
-import 'package:flutter_pokedex/core/util/utlis.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:flutter_pokedex/core/util/utlis.dart';
 
-import '../../../../core/data/base_dto/base_pokemon_dto.dart';
-import '../../../../core/data/base_dto/pokemon_effect_entries_dto.dart';
-import '../../../../core/data/base_dto/pokemon_flavour_text_dto.dart';
+import '../../../../core/data/base_dto/base_dto.dart';
 import '../../../domain/models/pokemon_item_model.dart';
 
 part 'pokemon_item_dto.g.dart';
@@ -11,9 +9,10 @@ part 'pokemon_item_dto.g.dart';
 @JsonSerializable()
 class PokemonItemDto {
   @JsonKey(name: 'attributes')
-  final List<BasePokemonDto> attrs;
+  final List<BaseResponseResultsDto> attrs;
+
   @JsonKey(name: 'category')
-  final BasePokemonDto category;
+  final BaseResponseResultsDto category;
 
   @JsonKey(name: 'cost')
   final int cost;
@@ -40,11 +39,11 @@ class PokemonItemDto {
     required this.category,
     required this.cost,
     required this.effectEntries,
-    this.fillingEffect,
-    this.fillingPower,
     required this.name,
     required this.flavorText,
     required this.sprite,
+    this.fillingEffect,
+    this.fillingPower,
   });
 
   factory PokemonItemDto.fromJson(Map<String, dynamic> json) =>
@@ -53,18 +52,20 @@ class PokemonItemDto {
   Map<String, dynamic> toJson() => _$PokemonItemDtoToJson(this);
 
   PokemonItemModel toModel() => PokemonItemModel(
-      attributes: attrs.map((e) => e.name.removeDash().toTitleCase()).toList(),
-      category: category.name.removeDash(),
-      cost: cost,
-      fillingEffect: fillingEffect,
-      fillingPower: fillingPower,
-      effects: effectEntries.map((e) => e.toModel()).toList(),
-      flavorEntries: flavorText
-          .where((element) => element.language.name == 'en')
-          .map((e) => e.toModel())
-          .toList(),
-      name: name.removeDash().toTitleCase(),
-      imageUrl: sprite.imageUrl);
+        attributes:
+            attrs.map((e) => e.name.removeDash().toTitleCase()).toList(),
+        category: category.name.removeDash().toTitleCase(),
+        cost: cost,
+        fillingEffect: fillingEffect,
+        fillingPower: fillingPower,
+        effects: effectEntries.map((e) => e.toModel()).toList(),
+        flavorEntries: flavorText
+            .where((element) => element.language.name == 'en')
+            .map((e) => e.toModel())
+            .toList(),
+        name: name.removeDash().toTitleCase(),
+        imageUrl: sprite.imageUrl,
+      );
 }
 
 @JsonSerializable()

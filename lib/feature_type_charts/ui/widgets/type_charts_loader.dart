@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/feature_type_charts/context/provider.dart';
-import 'package:flutter_pokedex/feature_type_charts/ui/widgets/type_chart_Card.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/widget/transitions.dart';
+import '../../../core/widget/core_widgets.dart';
+import '../../context/provider.dart';
+import 'widgets.dart';
 
 class TypeChartsLoader extends ConsumerWidget {
   const TypeChartsLoader({super.key});
@@ -11,51 +12,16 @@ class TypeChartsLoader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => SliverPadding(
         padding: const EdgeInsets.all(8.0),
-        sliver: ref.watch(pokemonTypeChartsProvider).when(
+        sliver: ref.watch(typeChartsProvider).when(
               loading: () => const SliverFillRemaining(
-                child: Center(child: Text('loading')),
-              ),
-              loadMore: (data) => SliverAnimatedList(
-                key: ref.read(pokemonTypeChartsProvider.notifier).listKey,
-                itemBuilder: (context, index, animation) => LoadTransition(
-                  animation: animation,
-                  child: PokemonTypeChartsCard(
-                    details: data[index],
-                  ),
-                ),
-              ),
-              data: (data) => SliverAnimatedList(
-                key: ref.read(pokemonTypeChartsProvider.notifier).listKey,
-                itemBuilder: (context, index, animation) => LoadTransition(
-                  animation: animation,
-                  child: PokemonTypeChartsCard(
-                    details: data[index],
-                  ),
-                ),
-              ),
-              error: (err, stk) => SliverFillRemaining(
-                child: Center(
-                  child: Text(err.toString()),
-                ),
-              ),
-              errorLoadMore: (data, err, stk) => SliverAnimatedList(
-                key: ref.read(pokemonTypeChartsProvider.notifier).listKey,
-                itemBuilder: (context, index, animation) => LoadTransition(
-                  animation: animation,
-                  child: PokemonTypeChartsCard(
-                    details: data[index],
-                  ),
-                ),
-              ),
-              end: (message, data) => SliverAnimatedList(
-                key: ref.read(pokemonTypeChartsProvider.notifier).listKey,
-                itemBuilder: (context, index, animation) => LoadTransition(
-                  animation: animation,
-                  child: PokemonTypeChartsCard(
-                    details: data[index],
-                  ),
-                ),
-              ),
+                  child: LoadingInfo(
+                      text: "Fetching Types", color: Color(0xffb1736d))),
+              loadMore: (data) => TypesList(data: data),
+              data: (data) => TypesList(data: data),
+              error: (err, stk) =>
+                  const SliverFillRemaining(child: PaginatorErrorWidget()),
+              errorLoadMore: (data, err, stk) => TypesList(data: data),
+              end: (message, data) => TypesList(data: data),
             ),
       );
 }

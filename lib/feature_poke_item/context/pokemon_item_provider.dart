@@ -49,13 +49,12 @@ class PokemonItemNotifier
       for (final PokemonItemModel it in items) {
         await Future.delayed(
           const Duration(milliseconds: 400),
-          () => _key.currentState?.insertItem(
-            _items.indexOf(it),
-          ),
+          () => _key.currentState?.insertItem(_items.indexOf(it)),
         );
       }
     } catch (e, stk) {
       debugPrintStack(stackTrace: stk);
+      state = Paginator.error(e, stk);
     }
   }
 
@@ -72,26 +71,19 @@ class PokemonItemNotifier
           await _repo.getItems(offset: _offset, limit: 5);
 
       _nextURL = base.next;
-      if (_nextURL != null) {
-        int newOffset = getOffsetFromString(_nextURL!) ?? _offset;
-        if (newOffset > _offset) {
-          _offset = newOffset;
-        } else {
-          state = Paginator.end("The end", _items);
-          return;
-        }
-      }
 
       List<PokemonItemModel> items = await _repo.getItemsDetails(base.results);
+
+      if (_nextURL != null) {
+        _offset = getOffsetFromString(_nextURL!) ?? _offset;
+      }
 
       state = Paginator.data(_items..addAll(items));
 
       for (final PokemonItemModel it in items) {
         await Future.delayed(
           const Duration(milliseconds: 400),
-          () => _key.currentState?.insertItem(
-            _items.indexOf(it),
-          ),
+          () => _key.currentState?.insertItem(_items.indexOf(it)),
         );
       }
     } catch (e, stk) {

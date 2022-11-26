@@ -11,28 +11,22 @@ class LoadTransition extends StatelessWidget {
   });
 
   Animation<double> get fadeTweenAnimation =>
-      Tween<double>(begin: 0.1, end: 1.0).animate(
-        CurvedAnimation(
-          parent: animation,
-          curve: const Interval(0.2, 1, curve: Curves.fastOutSlowIn),
-        ),
+      Tween<double>(begin: 0, end: 1.0).animate(
+        CurvedAnimation(parent: animation, curve: Curves.linearToEaseOut),
       );
 
   Animation<double> get scaleTweenAnimation =>
-      Tween<double>(begin: 0.1, end: 1).animate(
+      Tween<double>(begin: 0.2, end: 1).animate(
         CurvedAnimation(
           parent: animation,
-          curve: const Interval(0.3, 1, curve: Curves.easeIn),
+          curve: const Interval(0.2, 1, curve: Curves.easeInCirc),
         ),
       );
 
   @override
   Widget build(BuildContext context) => ScaleTransition(
-        scale: scaleTweenAnimation,
-        alignment: Alignment.topLeft,
-        child: FadeTransition(
-          opacity: fadeTweenAnimation,
-          child: child,
-        ),
-      );
+      scale: scaleTweenAnimation,
+      alignment: Alignment.center,
+      filterQuality: FilterQuality.low,
+      child: FadeTransition(opacity: fadeTweenAnimation, child: child));
 }

@@ -44,7 +44,7 @@ class PokemonMovesDetailedDto {
 
   PokemonMoveDetailed toMove() => PokemonMoveDetailed(
         id: id,
-        name: name.removeDash(),
+        name: name.removeDash().toTitleCase(),
         power: power,
         pp: pp,
         moveType: learnedByTypeDto.name,
@@ -52,7 +52,7 @@ class PokemonMovesDetailedDto {
             learnedByPokemon.map((e) => e.toPokemonModel()).toList(),
         priority: priority,
         accuracy: accuracy,
-        damageClass: damageClass.name,
+        damageClass: damageClass.name.toTitleCase(),
         effect: effectEntries.map((e) => e.toModel()).toList(),
         flavourText: flavourText.map((e) => e.toModel()).toList(),
       );

@@ -9,6 +9,7 @@ part 'location_dto.g.dart';
 
 @JsonSerializable()
 class PokemonLocationDto {
+  
   @JsonKey(name: "locations")
   final List<BaseResponseResultsDto> locations;
   @JsonKey(name: "main_generation")
@@ -25,7 +26,7 @@ class PokemonLocationDto {
   LocationModel toModel() => LocationModel(
         regionName: name.removeDash().toTitleCase(),
         locations: getUniqueSet(locations.map((e) => e.name)),
-        gen: generation?.name,
+        gen: generation?.name.toTitleCase(),
       );
 
   factory PokemonLocationDto.fromJson(Map<String, dynamic> json) =>

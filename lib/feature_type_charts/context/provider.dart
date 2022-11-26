@@ -6,11 +6,10 @@ import '../data/repository/pokemon_type_chats_impl.dart';
 import '../domain/models/pokemon_types_detailed_model.dart';
 import '../domain/repository/pokemon_type_chats_repo.dart';
 
-final pokemonTypeRepoProvider = Provider<PokemonTypeChartsRepostiory>(
+final typeRepoProvider = Provider<PokemonTypeChartsRepostiory>(
   (ref) => PokemonTypeChartsImpl(),
 );
 
-final pokemonTypeChartsProvider = StateNotifierProvider<
-        PokemonTypeChartsNotifier, Paginator<List<PokemonTypeDetailedModel>>>(
-    (ref) =>
-        PokemonTypeChartsNotifier(ref.read(pokemonTypeRepoProvider))..init());
+final typeChartsProvider = StateNotifierProvider<PokemonTypeChartsNotifier,
+        Paginator<List<PokemonTypeDetailedModel>>>(
+    (ref) => PokemonTypeChartsNotifier(ref.read(typeRepoProvider))..init());

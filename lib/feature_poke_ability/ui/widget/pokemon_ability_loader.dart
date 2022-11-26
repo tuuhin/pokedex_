@@ -18,7 +18,7 @@ class PokemonAbilityLoader extends ConsumerWidget {
             .when(
               loading: () => const SliverFillRemaining(
                   child: LoadingInfo(
-                      text: "Fecthing Ability", color: Color(0xffffce4b))),
+                      text: "Fecthing Ability", color: Color(0xff58a9f4))),
               loadMore: (data) => PokemonAbilityList(ability: data),
               data: (data) => PokemonAbilityList(ability: data),
               error: (err, stk) => SliverFillRemaining(

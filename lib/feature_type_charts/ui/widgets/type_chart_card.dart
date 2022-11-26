@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/core/util/utlis.dart';
 import 'package:flutter_pokedex/feature_type_charts/ui/widgets/pokemon_with_type.dart';
 import 'package:flutter_pokedex/feature_type_charts/ui/widgets/widgets.dart';
 import 'package:flutter_pokedex/main.dart';
@@ -15,7 +16,6 @@ class PokemonTypeChartsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger.fine("ehy");
     Color primaryColor =
         PokeMonType.getPokeMonTypeByName(details.name).primaryColor;
     Color secondaryColor =
@@ -31,7 +31,7 @@ class PokemonTypeChartsCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              details.name,
+              details.name.toTitleCase(),
               style: Theme.of(context).textTheme.headline6?.copyWith(
                   color: secondaryColor, fontWeight: FontWeight.w600),
             ),
@@ -39,14 +39,16 @@ class PokemonTypeChartsCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 2.0, right: 4),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Damage Relation',
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                        color: secondaryColor, fontWeight: FontWeight.w600),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        ?.copyWith(color: secondaryColor),
                   ),
-                  if (details.moveDamageClass != null)
+                  if (details.moveDamageClass != null) ...[
+                    const SizedBox(width: 10),
                     Chip(
                       label: Text(details.moveDamageClass!,
                           style: TextStyle(
@@ -59,6 +61,7 @@ class PokemonTypeChartsCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                     )
+                  ]
                 ],
               ),
             ),

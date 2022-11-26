@@ -8,25 +8,25 @@ class BlurryAppBar extends SliverPersistentHeaderDelegate {
   BlurryAppBar({required this.title});
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return AppBar(
-      elevation: 0,
-      automaticallyImplyLeading: false,
-      title: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-        child: Text(
-          title,
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          BuildContext context, double shrinkOffset, bool overlapsContent) =>
+      AppBar(
+        automaticallyImplyLeading: false,
+        title: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 200),
+            opacity: 1 - (shrinkOffset / maxExtent),
+            child: Text(title,
+                style: const TextStyle(fontWeight: FontWeight.w600)),
+          ),
         ),
-      ),
-    );
-  }
+      );
 
   @override
   double get maxExtent => kTextTabBarHeight;
 
   @override
-  double get minExtent => 0;
+  double get minExtent => kTextTabBarHeight * .5;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>

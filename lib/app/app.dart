@@ -16,9 +16,10 @@ class App extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: LayoutBuilder(
-          builder: (context, constraints) => constraints.maxWidth < 800
-              ? Column(children: _childrens)
-              : Row(children: _childrens)),
+        builder: (context, constraints) => constraints.maxWidth < 800
+            ? Column(children: _childrens)
+            : Row(children: _childrens),
+      ),
     );
   }
 }

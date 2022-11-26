@@ -20,6 +20,8 @@ class PokemonTypeChartsNotifier
 
   String? _nextURL;
 
+  int get count => _types.length;
+
   final GlobalKey<SliverAnimatedListState> _key =
       GlobalKey<SliverAnimatedListState>();
 
@@ -35,7 +37,7 @@ class PokemonTypeChartsNotifier
     try {
       PokemonBaseResponse response = await _repo.getBaseTypeInfo();
       if (response.next != null) {
-        _offset = getIdFromString(response.next!) ?? _offset;
+        _offset = getIdFromString(response.next!);
       }
       List<PokemonTypeDetailedModel> types =
           await _repo.getTypeDetailed(response.results);
@@ -71,7 +73,7 @@ class PokemonTypeChartsNotifier
       PokemonBaseResponse response =
           await _repo.getBaseTypeInfo(offset: _offset);
       if (response.next != null) {
-        _offset = getIdFromString(response.next!) ?? _offset;
+        _offset = getIdFromString(response.next!);
       }
       List<PokemonTypeDetailedModel> types =
           await _repo.getTypeDetailed(response.results);

@@ -9,8 +9,8 @@ import '../domain/domain.dart';
 
 class PokemonMovesPaginatedNotifier
     extends StateNotifier<Paginator<List<PokemonMoveDetailed>>> {
-  PokemonMovesPaginatedNotifier(this._impl) : super(Paginator.loading());
-  final PokemonMoveRespository _impl;
+  PokemonMovesPaginatedNotifier(this._repository) : super(Paginator.loading());
+  final PokemonMoveRespository _repository;
 
   final List<PokemonMoveDetailed> _moves = <PokemonMoveDetailed>[];
   final GlobalKey<SliverAnimatedListState> _stateKey =
@@ -33,20 +33,20 @@ class PokemonMovesPaginatedNotifier
 
   void _fetchSomeMoves() async {
     try {
-      PokemonBaseResponse move = await _impl.getMoves(limit: 5);
+      PokemonBaseResponse move = await _repository.getMoves(limit: 5);
       _nextURL = move.next;
       if (_nextURL != null) {
         _offset = getOffsetFromString(_nextURL!) ?? 0;
       }
 
       List<PokemonMoveDetailed> movesDetailed =
-          await _impl.getDetailedMove(move.results);
+          await _repository.getDetailedMove(move.results);
 
       state = Paginator.data(_moves..addAll(movesDetailed));
 
       for (final PokemonMoveDetailed move in movesDetailed) {
         await Future.delayed(
-          const Duration(milliseconds: 600),
+          const Duration(milliseconds: 200),
           () => _stateKey.currentState?.insertItem(_moves.indexOf(move)),
         );
       }
@@ -67,26 +67,28 @@ class PokemonMovesPaginatedNotifier
     try {
       state = Paginator.loadMore(_moves);
       PokemonBaseResponse move =
-          await _impl.getMoves(offset: _offset, limit: 10);
+          await _repository.getMoves(offset: _offset, limit: 5);
+
       _nextURL = move.next;
+
+      List<PokemonMoveDetailed> movesDetailed =
+          await _repository.getDetailedMove(move.results);
+
       if (_nextURL != null) {
         _offset = getOffsetFromString(_nextURL!) ?? _offset;
       }
-      List<PokemonMoveDetailed> movesDetailed =
-          await _impl.getDetailedMove(move.results);
+
       state = Paginator.data(_moves..addAll(movesDetailed));
-      if (_stateKey.currentState != null) {
-        for (final PokemonMoveDetailed move in movesDetailed) {
-          await Future.delayed(
-            const Duration(milliseconds: 600),
-            () => _stateKey.currentState?.insertItem(
-              _moves.indexOf(move),
-            ),
-          );
-        }
+
+      for (final PokemonMoveDetailed move in movesDetailed) {
+        await Future.delayed(
+          const Duration(milliseconds: 200),
+          () => _stateKey.currentState?.insertItem(_moves.indexOf(move)),
+        );
       }
     } catch (e, stk) {
       state = Paginator.errorLoadMore(_moves, e, stk);
+      debugPrintStack(stackTrace: stk);
     }
   }
 }

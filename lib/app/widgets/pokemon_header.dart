@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/core/context/providers.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../core/context/providers.dart';
 
 class PokeMonHeader extends StatelessWidget {
   const PokeMonHeader({Key? key}) : super(key: key);

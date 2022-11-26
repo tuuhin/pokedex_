@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 
 class PokeMonAboutCards extends StatelessWidget {
-  final Color? color;
+  final Color color;
   final String aboutText;
-  final void Function()? onTap;
+  final void Function() onTap;
   const PokeMonAboutCards({
     Key? key,
-    this.color,
-    this.onTap,
+    required this.color,
+    required this.onTap,
     required this.aboutText,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: color,
-      borderRadius: BorderRadius.circular(15),
+    return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
@@ -23,7 +21,7 @@ class PokeMonAboutCards extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-                color: color != null ? color!.withOpacity(0.75) : Colors.grey,
+                color: color.withOpacity(0.8),
                 offset: const Offset(0, 5),
                 blurRadius: 8,
                 spreadRadius: 2),

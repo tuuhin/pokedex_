@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/models/models.dart';
@@ -20,6 +21,7 @@ class DetailedPokedexPokemonNotifier
     try {
       state = AsyncValue.data(await _repository.getPokemonDetailed(id));
     } catch (e, stk) {
+      debugPrintStack(stackTrace: stk);
       state = AsyncValue.error(e, stk);
     }
   }

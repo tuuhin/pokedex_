@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/core/widget/core_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/util/paginator/paginator.dart';
 import '../context/providers.dart';
-import '../domain/models/pokemon_news_models.dart';
 import './widgets/widgets.dart';
 import '../../core/widget/blurry_appbar.dart';
 

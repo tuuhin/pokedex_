@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/models/models.dart';
@@ -16,6 +16,7 @@ class PokemonSpeciesNotifier
   void getSpeciesData(int pokeId) async {
     try {
       PokemonSpeciesModel data = await _repository.getSpeciesDetials(pokeId);
+      // setting the evolution Id to be used further
       ref.read(evolutionIdProvider.notifier).setId(data.evolutionChainId);
       state = AsyncValue.data(data);
     } catch (e, stk) {

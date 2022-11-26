@@ -12,12 +12,9 @@ final _apiClientProvider =
     Provider<PokemonAbilityClient>((ref) => PokemonAbilityClient(dio));
 
 final _abilityRepositoryProvider = Provider<PokemonAbilityRespository>(
-  (ref) => PokemonAbilityRepositoryImpl(
-    ref.read(_apiClientProvider),
-  ),
-);
+    (ref) => PokemonAbilityRepositoryImpl(ref.read(_apiClientProvider)));
 
 final pokemonAbilityProvider = StateNotifierProvider<PokemonAbilityNotifier,
-    Paginator<List<PokemonAbility>>>(
-  (ref) => PokemonAbilityNotifier(ref.read(_abilityRepositoryProvider))..init(),
-);
+        Paginator<List<PokemonAbility>>>(
+    (ref) =>
+        PokemonAbilityNotifier(ref.read(_abilityRepositoryProvider))..init());

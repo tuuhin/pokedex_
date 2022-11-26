@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
-import '../../domain/models/pokemon_with_ability_model.dart';
+import '../../domain/models/models.dart';
 
 class PokemonWithAbilityScrollView extends StatelessWidget {
   final List<PokemonWithAbility> pokemon;

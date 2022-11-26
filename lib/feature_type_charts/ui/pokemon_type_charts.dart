@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/core/widget/blurry_appbar.dart';
 import 'package:flutter_pokedex/feature_type_charts/context/provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,7 +21,17 @@ class _PokemonTypeChartsState extends ConsumerState<PokemonTypeCharts> {
     if (_scrollController.position.maxScrollExtent -
             _scrollController.position.pixels <=
         delta) {
-      ref.read(pokemonTypeChartsProvider.notifier).requestMore();
+      ref.read(typeChartsProvider.notifier).requestMore();
+    }
+  }
+
+  void _postCallBack(Duration _) async {
+    GlobalKey<SliverAnimatedListState> key =
+        ref.read(typeChartsProvider.notifier).listKey;
+
+    for (int i = 0; i < ref.read(typeChartsProvider.notifier).count; i++) {
+      await Future.delayed(const Duration(milliseconds: 400),
+          () => key.currentState?.insertItem(i));
     }
   }
 
@@ -29,6 +40,8 @@ class _PokemonTypeChartsState extends ConsumerState<PokemonTypeCharts> {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollCallBack);
+
+    WidgetsBinding.instance.addPostFrameCallback(_postCallBack);
   }
 
   @override
@@ -40,15 +53,19 @@ class _PokemonTypeChartsState extends ConsumerState<PokemonTypeCharts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Scrollbar(
-        controller: _scrollController,
-        child: CustomScrollView(
+      body: SafeArea(
+        child: Scrollbar(
           controller: _scrollController,
-          slivers: const [
-            SliverAppBar(title: Text('Types')),
-            TypeChartsLoader(),
-            TypeChartsLoadMore()
-          ],
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              const SliverAppBar(),
+              SliverPersistentHeader(
+                  floating: true, delegate: BlurryAppBar(title: 'Types')),
+              const TypeChartsLoader(),
+              const TypeChartsLoadMore()
+            ],
+          ),
         ),
       ),
     );

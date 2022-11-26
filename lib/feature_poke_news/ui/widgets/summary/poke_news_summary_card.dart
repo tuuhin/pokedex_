@@ -62,8 +62,8 @@ class _PokeNewsSummaryState extends State<PokeNewsSummary>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _controller,
-      builder: (context, child) => ScaleTransition(
-          alignment: Alignment.bottomCenter, scale: scale, child: child),
+      builder: (context, child) =>
+          SizeTransition(sizeFactor: scale, child: child),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: MouseRegion(

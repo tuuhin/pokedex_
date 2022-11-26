@@ -36,7 +36,7 @@ final pokedexPokemonProvider = StateNotifierProvider<PokedexPokemonNotifier,
 final evolutionChainProvider = StateNotifierProvider.autoDispose
     .family<EvolutionChainNotifier, EvolutionChainData, int?>(
   (ref, arg) {
-    // ref.keepAlive();
+    ref.keepAlive();
     return EvolutionChainNotifier(ref.read(pokemonEvchainRepo))
       ..getEvChain(arg);
   },
@@ -48,6 +48,7 @@ final evolutionIdProvider = StateNotifierProvider<EvoltutionIdProvider, int?>(
 final pokemonSpeciesProvider = StateNotifierProvider.autoDispose
     .family<PokemonSpeciesNotifier, AsyncValue<PokemonSpeciesModel>, int>(
   (ref, pokeId) {
+    ref.keepAlive();
     return PokemonSpeciesNotifier(ref.read(pokemonSpeciesRepo), ref: ref)
       ..getSpeciesData(pokeId);
   },
@@ -68,7 +69,7 @@ final currentSelectedPokemon = StateNotifierProvider.autoDispose.family<
     DetailedPokedexPokemonNotifier,
     AsyncValue<PokedexPokemonModel>,
     int>((ref, model) {
-  // ref.keepAlive();
+  ref.keepAlive();
 
   List<PokedexPokemonModel> pokemons =
       ref.read(pokedexPokemonProvider.notifier).pokemons;

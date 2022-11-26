@@ -38,6 +38,7 @@ class PokemonAbilityDto {
 
   factory PokemonAbilityDto.fromJson(Map<String, dynamic> json) =>
       _$PokemonAbilityDtoFromJson(json);
+
   Map<String, dynamic> toJson() => _$PokemonAbilityDtoToJson(this);
 
   PokemonAbility toModel() => PokemonAbility(
@@ -59,8 +60,10 @@ class PokemonAbilityDto {
 class PokemonWithAbilityDto {
   @JsonKey(name: "is_hidden")
   final bool isHiddenAbility;
+
   @JsonKey(name: "pokemon")
   final BasePokemonDto pokemon;
+
   @JsonKey(name: "slot")
   final int slots;
 
@@ -72,11 +75,11 @@ class PokemonWithAbilityDto {
 
   factory PokemonWithAbilityDto.fromJson(Map<String, dynamic> json) =>
       _$PokemonWithAbilityDtoFromJson(json);
+
   Map<String, dynamic> toJson() => _$PokemonWithAbilityDtoToJson(this);
 
   PokemonWithAbility toModel() => PokemonWithAbility(
-        hiddenAbility: isHiddenAbility,
-        pokemon: pokemon.toPokemonModel(),
-        slots: slots,
-      );
+      hiddenAbility: isHiddenAbility,
+      pokemon: pokemon.toPokemonModel(),
+      slots: slots);
 }

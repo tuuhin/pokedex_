@@ -1,8 +1,7 @@
-import 'package:flutter_pokedex/core/models/base_pokemon_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../../core/data/base_dto/base_pokemon_dto.dart';
 import '../../../../core/data/base_dto/base_response_results_dto.dart';
+import '../../../../core/models/base_pokemon_model.dart';
 import '../../../domain/models/pokemon_types_detailed_model.dart';
 import './damage_relation_dto.dart';
 import './pokemon_with_type.dart';

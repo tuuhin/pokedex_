@@ -18,7 +18,7 @@ class PokemonTypeChartsImpl implements PokemonTypeChartsRepostiory {
   @override
   Future<List<PokemonTypeDetailedModel>> getTypeDetailed(
       List<BaseResponseResults> results) async {
-    Iterable<int> ids = results.map((e) => getIdFromString(e.url) ?? 1);
+    Iterable<int> ids = results.map((e) => getIdFromString(e.url));
     Iterable<PokemonTypeChartsDto> detailedTypes = await Future.wait(
         ids.map((id) => _clt.getTypeDetailed(id: id)),
         eagerError: true);

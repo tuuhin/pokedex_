@@ -67,7 +67,7 @@ class _PokeNewsDetailedCardState extends State<PokeNewsDetailedCard> {
                       decoration: const BoxDecoration(color: Colors.black12),
                     ),
                     errorWidget: (context, url, error) => Container(
-                      decoration: BoxDecoration(color: Colors.black26),
+                      decoration: const BoxDecoration(color: Colors.black26),
                     ),
                   ),
                 ),

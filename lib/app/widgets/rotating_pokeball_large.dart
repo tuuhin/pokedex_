@@ -12,25 +12,18 @@ class _RotatingPokeBallState extends State<RotatingPokeBall>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _rotation;
-  late Animation<double> _fade;
-  late Animation<Color?> _color;
+
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 5000),
-    );
+        vsync: this, duration: const Duration(milliseconds: 200));
     _rotation = Tween<double>(begin: 0.0, end: 360).animate(_controller);
-    _fade = Tween<double>(begin: 0.2, end: 1).animate(CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.7, 1.0, curve: Curves.ease)));
-    _color = ColorTween(begin: Colors.grey, end: Colors.transparent).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut,
-      ),
-    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _controller.repeat();
   }
 
@@ -49,7 +42,10 @@ class _RotatingPokeBallState extends State<RotatingPokeBall>
         animation: _controller,
         builder: (context, child) =>
             Transform.rotate(angle: radians(_rotation.value), child: child),
-        child: Image.asset('assets/icons/poke_ball.png', color: _color.value),
+        child: Image.asset(
+          'assets/icons/poke_ball.png',
+          color: Colors.black12,
+        ),
       ),
     );
   }

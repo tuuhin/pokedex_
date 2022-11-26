@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/core/util/utlis.dart';
 
 import '../../domain/models/pokemon_item_model.dart';
-
-part './pokemon_item_card_extra.dart';
+import 'widget.dart';
 
 class PokemonItemCard extends StatelessWidget {
   final PokemonItemModel item;
-  const PokemonItemCard({super.key, required this.item});
+  final int index;
+  const PokemonItemCard({super.key, required this.item, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +25,30 @@ class PokemonItemCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(item.name.removeDash().toTitleCase(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1
-                        ?.copyWith(fontWeight: FontWeight.w600)),
+                Text(
+                  decoratedId(index + 1),
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  item.name,
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1
+                      ?.copyWith(fontWeight: FontWeight.w600),
+                ),
                 CachedNetworkImage(
-                  placeholder: (context, url) =>
-                      const SizedBox.square(dimension: 15),
+                  height: 30,
+                  width: 30,
+                  placeholder: (context, url) => Container(
+                    alignment: Alignment.center,
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                   imageUrl: item.imageUrl,
                 ),
               ],
@@ -73,29 +89,40 @@ class PokemonItemCard extends StatelessWidget {
                 ),
               ),
             PokemonItemCardExtra(item: item),
-            Text('Attributes', style: Theme.of(context).textTheme.subtitle1),
+            Text(
+              'Attributes',
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
             const Divider(),
             Wrap(
               children: item.attributes
-                  .map((e) => Chip(
-                        backgroundColor: Colors.transparent,
-                        padding: EdgeInsets.zero,
-                        avatar: Container(
-                          width: 8,
-                          height: 8,
-                          decoration: const BoxDecoration(
-                            color: Colors.redAccent,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.redAccent,
-                                  offset: Offset.zero,
-                                  blurRadius: 3),
-                            ],
-                          ),
+                  .map<Chip>(
+                    (attrs) => Chip(
+                      backgroundColor: Colors.transparent,
+                      padding: EdgeInsets.zero,
+                      avatar: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: const BoxDecoration(
+                          color: Color(0xffffce4b),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0xffffce4b),
+                              offset: Offset.zero,
+                              blurRadius: 3,
+                            )
+                          ],
                         ),
-                        label: Text(e),
-                      ))
+                      ),
+                      label: Text(
+                        attrs,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  )
                   .toList(),
             )
           ],

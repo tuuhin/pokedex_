@@ -39,7 +39,7 @@ class PokedexPokemonNotifier
   void _fetchSome() async {
     try {
       PokemonBaseResponse response =
-          await _repository.getPokemons(offset: _offset);
+          await _repository.getPokemons(offset: _offset, limit: 20);
       _nextURL = response.next;
       if (_nextURL != null) {
         _offset = getOffsetFromString(_nextURL!) ?? 0;
@@ -80,14 +80,15 @@ class PokedexPokemonNotifier
     _timer = Timer(const Duration(milliseconds: 2000), () {});
     try {
       PokemonBaseResponse response =
-          await _repository.getPokemons(offset: _offset);
+          await _repository.getPokemons(offset: _offset, limit: 10);
       _nextURL = response.next;
-      if (_nextURL != null) {
-        _offset = getOffsetFromString(_nextURL!) ?? _offset;
-      }
 
       List<PokedexPokemonModel> pokemons =
           await _repository.getPokemonInfo(response.results);
+
+      if (_nextURL != null) {
+        _offset = getOffsetFromString(_nextURL!) ?? _offset;
+      }
 
       pokemons.removeWhere((element) => element.isDefault == false);
 
