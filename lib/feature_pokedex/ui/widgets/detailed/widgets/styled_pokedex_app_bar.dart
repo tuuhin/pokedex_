@@ -2,8 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/core/util/utlis.dart';
 
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../../../domain/models/models.dart';
 import 'rotating_flex_pokeball.dart';
 
@@ -41,11 +39,14 @@ class StyledPokedexAppBar extends SliverPersistentHeaderDelegate {
                     fontSize: shrinkOffset <= height * 0.4
                         ? Theme.of(context).textTheme.headline4?.fontSize
                         : Theme.of(context).textTheme.headline6?.fontSize),
-                child: Text(pokemon.simple.name,
-                    style: TextStyle(
-                        fontFamily: GoogleFonts.poppins().fontFamily,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white)),
+                child: Text(
+                  pokemon.simple.name,
+                  style: const TextStyle(
+                    fontFamily: 'Avro',
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
             Positioned(

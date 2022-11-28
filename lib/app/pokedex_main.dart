@@ -16,6 +16,7 @@ class MainPokDex extends StatelessWidget {
       ),
       child: Column(
         children: const [
+          SizedBox(height: 30),
           PokeMonHeader(),
           Expanded(
             child: PokeMonAboutCardList(),

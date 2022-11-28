@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/context/providers.dart';
@@ -22,9 +21,10 @@ class PokeMonHeader extends StatelessWidget {
                   child: Text(
                     'What Pokemon are you looking for ?',
                     style: TextStyle(
-                        fontFamily: GoogleFonts.poppins().fontFamily,
-                        fontSize: 32,
-                        fontWeight: FontWeight.w900),
+                      fontFamily: 'Avro',
+                      fontSize: Theme.of(context).textTheme.headline4?.fontSize,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Consumer(
@@ -53,8 +53,7 @@ class PokeMonHeader extends StatelessWidget {
                   ? Colors.black54
                   : Colors.white60,
               decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  hintText: 'Search Pokemon,Move or ability'),
+                  prefixIcon: Icon(Icons.search), hintText: 'Search Pokemon'),
             ),
           ],
         ),

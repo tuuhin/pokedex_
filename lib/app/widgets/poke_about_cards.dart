@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class PokeMonAboutCards extends StatelessWidget {
   final Color color;
-  final String aboutText;
+  final String title;
   final void Function() onTap;
   const PokeMonAboutCards({
     Key? key,
     required this.color,
     required this.onTap,
-    required this.aboutText,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -21,10 +21,11 @@ class PokeMonAboutCards extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-                color: color.withOpacity(0.8),
-                offset: const Offset(0, 5),
-                blurRadius: 8,
-                spreadRadius: 2),
+              color: color.withOpacity(0.8),
+              offset: const Offset(0, 5),
+              blurRadius: 8,
+              spreadRadius: 2,
+            ),
           ],
         ),
         child: ClipRRect(
@@ -50,7 +51,7 @@ class PokeMonAboutCards extends StatelessWidget {
               Positioned(
                 left: 15,
                 child: Text(
-                  aboutText,
+                  title,
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

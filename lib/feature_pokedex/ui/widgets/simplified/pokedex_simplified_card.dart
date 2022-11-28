@@ -34,13 +34,16 @@ class PokedexSimplifiedCard extends StatelessWidget {
           Positioned(
             left: 0,
             child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                child: Text(decoratedId(model.pokemonId),
-                    style: const TextStyle(
-                        color: Colors.white70,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16))),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+              child: Text(
+                decoratedId(model.pokemonId),
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+              ),
+            ),
           ),
           Positioned(
             bottom: -10,
@@ -56,13 +59,25 @@ class PokedexSimplifiedCard extends StatelessWidget {
               height: size.height * .125,
               width: size.height * .125,
               errorWidget: (context, url, error) => const SizedBox.shrink(),
-              placeholder: (context, url) => Container(
+              progressIndicatorBuilder: (context, url, progress) => Container(
                 decoration: BoxDecoration(
-                  color: pokemonType.secondaryColor.withOpacity(0.5),
-                  border: Border.all(color: pokemonType.secondaryColor),
+                  color: pokemonType.secondaryColor.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(10),
                 ),
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: pokemonType.secondaryColor.withOpacity(0.25),
+                    value: progress.progress,
+                  ),
+                ),
               ),
+              // placeholder: (context, url) => Container(
+              //   decoration: BoxDecoration(
+              //     color: pokemonType.secondaryColor.withOpacity(0.2),
+              //     borderRadius:
+              //         const BorderRadius.only(bottomRight: Radius.circular(10)),
+              //   ),
+              // ),
             ),
           ),
           SizedBox.expand(
@@ -92,8 +107,9 @@ class PokedexSimplifiedCard extends StatelessWidget {
                             child: Text(
                               type.toTitleCase(),
                               style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white54),
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white54,
+                              ),
                             ),
                           ),
                         ),

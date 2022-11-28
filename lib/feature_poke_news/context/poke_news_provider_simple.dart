@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_pokedex/feature_poke_news/domain/domain.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../domain/domain.dart';
 
 class PokeNewsNotifierSimple
     extends StateNotifier<AsyncValue<List<PokemonNewsModel>>> {
@@ -22,7 +23,7 @@ class PokeNewsNotifierSimple
     try {
       state = AsyncValue.data(await _repostiory.getNews());
     } catch (error, stk) {
-      debugPrint(error.toString());
+      debugPrintStack(stackTrace: stk);
       state = AsyncValue.error(error, stk);
     }
   }

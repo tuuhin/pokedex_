@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/feature_pokedex/ui/widgets/detailed/widgets/evolution_error.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../context/providers.dart';
@@ -14,9 +15,12 @@ class PokemonEvolutionTab extends ConsumerWidget {
     int? evId = ref.read(evolutionIdProvider.notifier).evId;
     return ref.watch(evolutionChainProvider(evId)).when(
           data: (data) => PokemonEvolutionData(data: data.chain),
-          loading: () => Text("loading "),
-          error: (error, stackTrace) => Text("err"),
-          absent: (message) => Text(message),
+          loading: () => const SizedBox.shrink(),
+          error: (error, stackTrace) => const EvolutionError(),
+          absent: (message) => ListTile(
+            title: Text(message),
+            subtitle: const Text('Blank nothing found'),
+          ),
         );
   }
 }

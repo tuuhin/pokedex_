@@ -34,7 +34,10 @@ class PokedexPokemonNotifier
 
   void requestMore() => _fetchMore();
 
-  void refresh() => _fetchSome();
+  void refresh() {
+    state = Paginator.loading();
+    _fetchSome();
+  }
 
   void _fetchSome() async {
     try {
@@ -71,6 +74,9 @@ class PokedexPokemonNotifier
   }
 
   void _fetchMore() async {
+    if (state == Paginator.loading()) {
+      return;
+    }
     if (_nextURL == null) {
       state = Paginator.end("ENd of the list", _pokemons);
       return;
