@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 ThemeData lightTheme = ThemeData(
-    textTheme: GoogleFonts.montserratTextTheme(),
+    fontFamily: 'Monstserrat',
     appBarTheme:
         const AppBarTheme(backgroundColor: Colors.transparent, elevation: 0),
     primarySwatch: Colors.lightBlue,
@@ -36,7 +35,7 @@ ThemeData lightTheme = ThemeData(
     ));
 ThemeData darkTheme = ThemeData(
   colorScheme: const ColorScheme.dark(),
-  fontFamily: GoogleFonts.montserrat().fontFamily,
+  fontFamily: 'Monstserrat',
   appBarTheme:
       const AppBarTheme(backgroundColor: Colors.transparent, elevation: 0),
   cardTheme: CardTheme(
@@ -56,6 +55,6 @@ ThemeData darkTheme = ThemeData(
       borderSide: BorderSide.none,
       borderRadius: BorderRadius.circular(10),
     ),
-    fillColor: Colors.grey,
+    fillColor: Colors.black38,
   ),
 );

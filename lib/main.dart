@@ -50,8 +50,8 @@ void main() async {
     debugPrint('${record.level.name}: ${record.time}: ${record.message}');
   });
 
-  SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  // SystemChrome.setSystemUIOverlayStyle(
+  //     const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
   setPathUrlStrategy();
   runApp(ProviderScope(observers: [Observer()], child: const MyApp()));
